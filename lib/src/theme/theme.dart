@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-ThemeData lightMode = ThemeData.light().copyWith(
+ThemeData lightMode = ThemeData(
   brightness: Brightness.light,
 );
 
-ThemeData darkMode = ThemeData.dark().copyWith(
+ThemeData darkMode = ThemeData(
   brightness: Brightness.dark,
 );
