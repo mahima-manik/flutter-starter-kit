@@ -28,3 +28,9 @@ the `lib/src/localization` directory.
 To support additional languages, please visit the tutorial on
 [Internationalizing Flutter
 apps](https://flutter.dev/docs/development/accessibility-and-localization/internationalization)
+
+## TODO list on this project
+- [x] Add the toggle button to switch between dark and light theme
+- [x] Add provider to manage the app state (ThemeProvider)
+- [ ] Add a product detail page
+- [ ] Add a product list page
