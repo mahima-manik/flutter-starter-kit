@@ -2,6 +2,9 @@
 
 import 'package:flutter/material.dart';
 
+import '../theme/theme_provider.dart';
+import 'package:provider/provider.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -18,9 +21,7 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Theme.of(context).colorScheme.primary, 
         actions: <Widget>[
           IconButton(icon: Icon(Icons.brightness_4), onPressed: () {
-            setState(() {
-              isDarkMode = !isDarkMode;
-            });
+            Provider.of<ThemeProvider>(context, listen: false).toggleTheme();
           })
         ],
       ),
