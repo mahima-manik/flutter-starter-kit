@@ -8,16 +8,17 @@ class ProductInfoPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Product Info'),
+        title: const Text('Product Info'),
       ),
-      body: Container(
-        child: Column(
-          children: [
-            Text('Product Info'),
-          ],
+      body: 
+        const Center(
+          child: Column(
+            children: [
+              Text('Product Info'),
+            ],
+          ),
         ),
-      ),
+      
     );
   }
 }
-

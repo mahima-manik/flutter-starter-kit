@@ -37,3 +37,4 @@ apps](https://flutter.dev/docs/development/accessibility-and-localization/intern
 
 ## Learnings on the way
 - Rendering of the app starts with `MaterialApp`
+- To show Flutter Code Actions bulb in Cursor IDE on Mac, just press Ctrl+Shift+R
