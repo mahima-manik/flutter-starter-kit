@@ -6,6 +6,9 @@ ThemeData lightMode = ThemeData(
     surface: Colors.grey.shade400,
     primary: Colors.grey.shade300,
     secondary: Colors.grey.shade200,
+    onSurface: Colors.black,
+    onPrimary: Colors.black,
+    onSecondary: Colors.black,
   ),
 );
 
@@ -15,5 +18,8 @@ ThemeData darkMode = ThemeData(
     surface: Colors.grey.shade900,
     primary: Colors.grey.shade800,
     secondary: Colors.grey.shade700,
+    onSurface: Colors.white,
+    onPrimary: Colors.white,
+    onSecondary: Colors.white,
   ),
 );

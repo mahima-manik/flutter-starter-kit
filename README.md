@@ -34,3 +34,6 @@ apps](https://flutter.dev/docs/development/accessibility-and-localization/intern
 - [x] Add provider to manage the app state (ThemeProvider)
 - [ ] Add a product detail page
 - [ ] Add a product list page
+
+## Learnings on the way
+- Rendering of the app starts with `MaterialApp`
