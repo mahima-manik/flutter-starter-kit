@@ -10,6 +10,13 @@ class ProductInfoPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Product Info'),
       ),
+      body: Container(
+        child: Column(
+          children: [
+            Text('Product Info'),
+          ],
+        ),
+      ),
     );
   }
 }

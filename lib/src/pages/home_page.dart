@@ -20,7 +20,6 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.primary, 
         actions: <Widget>[
           IconButton(icon: Icon(Icons.brightness_4), onPressed: () {
             Provider.of<ThemeProvider>(context, listen: false).toggleTheme();
