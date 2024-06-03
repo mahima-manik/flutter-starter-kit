@@ -9,7 +9,7 @@ ThemeData lightMode = ThemeData(
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ButtonStyle(
       backgroundColor: WidgetStateProperty.resolveWith((_) => Colors.grey.shade300),
-      textStyle: WidgetStateProperty.resolveWith((_) => const TextStyle(color: Colors.white)),
+      foregroundColor: WidgetStateProperty.resolveWith((_) => Colors.black),
     ),
   ),
   appBarTheme: AppBarTheme(
@@ -45,7 +45,7 @@ ThemeData darkMode = ThemeData(
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ButtonStyle(
       backgroundColor: WidgetStateProperty.resolveWith((_) => Colors.grey.shade800),
-      textStyle: WidgetStateProperty.resolveWith((_) => const TextStyle(color: Colors.white)),
+      foregroundColor: WidgetStateProperty.resolveWith((_) => Colors.white),
     ),
   ),
   textTheme: const TextTheme(

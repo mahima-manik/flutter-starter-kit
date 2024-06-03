@@ -37,10 +37,7 @@ class _HomePageState extends State<HomePage> {
                   MaterialPageRoute(builder: (context) => ProductInfoPage()),
                 );
               },
-              child: Text(
-                'Go to Product Page', 
-                style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
-              ),
+              child: Text('Go to Product Page'),
             ),
         ],
       ),
