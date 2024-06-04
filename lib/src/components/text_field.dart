@@ -17,22 +17,27 @@ class FormTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 25),
+      padding: const EdgeInsets.symmetric(horizontal: 25),
       child: TextField(
+        controller: controller,
         keyboardType: keyboardType,
         decoration: InputDecoration(
           labelText: label,
           hintText: hintText,
           enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(10)),
-            borderSide: BorderSide(color: Colors.grey),
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
+            borderSide: BorderSide(color: theme.colorScheme.primary),
           ),
           focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(10)),
-            borderSide: BorderSide(color: Colors.grey),
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
+            borderSide: BorderSide(color: theme.colorScheme.onSurface),
           ),
-          fillColor: Colors.white30,
+          labelStyle: TextStyle(
+            color: theme.colorScheme.onSurface,
+          ),
+          fillColor: theme.colorScheme.surface,
           filled: true,
         ),
       ),

@@ -8,6 +8,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
               const SizedBox(height: 20),
               FormTextField(
-                controller: TextEditingController(),
+                controller: emailController,
                 label: 'Email',
                 hintText: 'Enter your email',
                 obscureText: false,
@@ -35,7 +38,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
               const SizedBox(height: 20),
               FormTextField(
-                controller: TextEditingController(),
+                controller: passwordController,
                 label: 'Password',
                 hintText: 'Enter your password',
                 obscureText: true,
