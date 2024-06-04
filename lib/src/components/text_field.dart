@@ -23,16 +23,17 @@ class FormTextField extends StatelessWidget {
       child: TextField(
         controller: controller,
         keyboardType: keyboardType,
+        obscureText: obscureText,
         decoration: InputDecoration(
           labelText: label,
           hintText: hintText,
           enabledBorder: OutlineInputBorder(
             borderRadius: const BorderRadius.all(Radius.circular(10)),
-            borderSide: BorderSide(color: theme.colorScheme.primary),
+            borderSide: BorderSide(color: theme.colorScheme.secondary),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: const BorderRadius.all(Radius.circular(10)),
-            borderSide: BorderSide(color: theme.colorScheme.onSurface),
+            borderSide: BorderSide(color: theme.colorScheme.primary),
           ),
           labelStyle: TextStyle(
             color: theme.colorScheme.onSurface,
