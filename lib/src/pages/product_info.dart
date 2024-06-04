@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../components/image_gallery.dart';
 import '../models/product.dart';
 
 class ProductInfoPage extends StatelessWidget {
@@ -15,14 +16,8 @@ class ProductInfoPage extends StatelessWidget {
       body: Column(
         children: [
           Expanded(
-            flex: 2,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: product.images.length,
-              itemBuilder: (context, index) {
-                return Image.network(product.images[index]);
-              },
-            ),
+            flex: 1,
+            child: ImageGallery(imageUrls: product.images),
           ),
           Expanded(
             flex: 1,

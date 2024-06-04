@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
 
 import '../models/product.dart';
@@ -22,7 +20,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         actions: <Widget>[
-          IconButton(icon: Icon(Icons.brightness_4), onPressed: () {
+          IconButton(icon: const Icon(Icons.brightness_4), onPressed: () {
             Provider.of<ThemeProvider>(context, listen: false).toggleTheme();
           })
         ],
@@ -40,12 +38,12 @@ class _HomePageState extends State<HomePage> {
                       name: 'Product 1', 
                       description: 'Description 1',
                       price: 100,
-                      images: ['https://picsum.photos/200/300?random=1'],
+                      images: ['https://picsum.photos/200/300?random=1', 'https://picsum.photos/200/300?random=2'],
                     ),
                   )),
                 );
               },
-              child: Text('Go to Product Page'),
+              child: const Text('Go to Product Page'),
             ),
         ],
       ),
