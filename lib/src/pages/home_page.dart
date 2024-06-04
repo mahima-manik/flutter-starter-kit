@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 
+import '../models/product.dart';
 import '../theme/theme_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -34,7 +35,14 @@ class _HomePageState extends State<HomePage> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => ProductInfoPage()),
+                  MaterialPageRoute(builder: (context) => ProductInfoPage(
+                    product: Product(
+                      name: 'Product 1', 
+                      description: 'Description 1',
+                      price: 100,
+                      images: ['https://picsum.photos/200/300?random=1'],
+                    ),
+                  )),
                 );
               },
               child: Text('Go to Product Page'),
