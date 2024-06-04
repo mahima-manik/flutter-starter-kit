@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../models/product.dart';
@@ -22,7 +23,10 @@ class _HomePageState extends State<HomePage> {
         actions: <Widget>[
           IconButton(icon: const Icon(Icons.brightness_4), onPressed: () {
             Provider.of<ThemeProvider>(context, listen: false).toggleTheme();
-          })
+          }),
+          IconButton(icon: const Icon(Icons.logout), onPressed: () {
+            FirebaseAuth.instance.signOut();
+          }),
         ],
       ),
       body: Center(
