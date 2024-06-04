@@ -11,7 +11,12 @@ class ProductInfoPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // title: Text(product.name),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: () => {},
+          ),
+        ],
       ),
       body: Column(
         children: [
