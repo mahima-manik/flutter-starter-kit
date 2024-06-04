@@ -38,7 +38,7 @@ class _HomePageState extends State<HomePage> {
                       name: 'Product 1', 
                       description: 'Description 1',
                       price: 100,
-                      images: ['https://picsum.photos/200/300?random=1', 'https://picsum.photos/200/300?random=2'],
+                      images: ['https://picsum.photos/200/300', 'https://picsum.photos/300', 'https://picsum.photos/400/300'],
                     ),
                   )),
                 );
