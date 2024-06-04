@@ -16,6 +16,7 @@ dependencies:
     sdk: flutter
   provider:
   firebase_core:
+  firebase_auth:
 
 dev_dependencies:
   flutter_test:
