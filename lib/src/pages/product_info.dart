@@ -18,15 +18,16 @@ class ProductInfoPage extends StatelessWidget {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          Expanded(
-            flex: 1,
-            child: ImageGallery(imageUrls: product.images),
-          ),
-          Expanded(
-            flex: 1,
-            child: Padding(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            ConstrainedBox( // This is used to set the maximum height of the ImageGallery to 40% of the screen's height.
+              constraints: BoxConstraints(
+                maxHeight: MediaQuery.of(context).size.height * 0.4,
+              ),
+              child: ImageGallery(imageUrls: product.images),
+            ),
+            Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -63,8 +64,8 @@ class ProductInfoPage extends StatelessWidget {
                 ],
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
