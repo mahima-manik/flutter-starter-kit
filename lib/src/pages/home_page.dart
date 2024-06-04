@@ -35,9 +35,9 @@ class _HomePageState extends State<HomePage> {
                   context,
                   MaterialPageRoute(builder: (context) => ProductInfoPage(
                     product: Product(
-                      name: 'Product 1', 
-                      description: 'Description 1',
-                      price: 100,
+                      name: 'Dettol Skincare Handwash - Moisturizing and Hydrating', 
+                      description: 'Dettol Skincare Handwash is our Signature product and is bestseller',
+                      price: 1000,
                       images: ['https://picsum.photos/200/300', 'https://picsum.photos/300', 'https://picsum.photos/400/300'],
                     ),
                   )),
