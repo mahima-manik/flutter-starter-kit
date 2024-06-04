@@ -38,3 +38,11 @@ apps](https://flutter.dev/docs/development/accessibility-and-localization/intern
 ## Learnings on the way
 - Rendering of the app starts with `MaterialApp`
 - To show Flutter Code Actions bulb in Cursor IDE on Mac, just press Ctrl+Shift+R
+
+## Configuring Firebase with Flutter project
+1. Create firebase project on the console: https://console.firebase.google.com/
+2. Install Firebase CLI tools: `curl -sL https://firebase.tools | bash`
+3. Login to Firebase CLI: `firebase login`
+4. To check if you are logged in, run: `firebase projects:list`
+5. Install FlutterFire CLI: `dart pub global activate flutterfire_cli` (This does not add any new file in your project, it is a separate package). Add this to PATH: `export PATH="$PATH:$HOME/.pub-cache/bin"`
+6. Add Firebase to your Flutter project: `flutterfire configure` and choose the platform you are working on (i.e. Android, iOS, Web, macOS)

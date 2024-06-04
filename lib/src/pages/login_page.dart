@@ -17,6 +17,7 @@ class _LoginPageState extends State<LoginPage> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const SizedBox(height: 30),
               Image.asset(
@@ -44,15 +45,15 @@ class _LoginPageState extends State<LoginPage> {
                 obscureText: true,
                 keyboardType: TextInputType.text,
               ),
+              TextButton(
+                onPressed: () {},
+                child: const Text('Forgot password?'),
+              ),
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {},
                 child: const Text('Login'),
               ),
-              TextButton(
-                onPressed: () {},
-                child: const Text('Forgot password?'),
-              ), 
             ],
           ),
         ),

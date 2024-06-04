@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage> {
                     product: Product(
                       name: 'Dettol Skincare Handwash - Moisturizing and Hydrating', 
                       description: 'Dettol Skincare Handwash is our Signature product and is bestseller',
-                      price: 1000,
+                      price: 10,
                       images: ['https://picsum.photos/200/300', 'https://picsum.photos/300', 'https://picsum.photos/400/300'],
                     ),
                   )),
