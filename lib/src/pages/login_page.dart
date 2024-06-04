@@ -44,6 +44,15 @@ class _LoginPageState extends State<LoginPage> {
                 obscureText: true,
                 keyboardType: TextInputType.text,
               ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {},
+                child: const Text('Login'),
+              ),
+              TextButton(
+                onPressed: () {},
+                child: const Text('Forgot password?'),
+              ), 
             ],
           ),
         ),
