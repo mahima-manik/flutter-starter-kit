@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import '../components/alert_dialog.dart';
 import '../components/text_field.dart';
@@ -21,6 +22,17 @@ class _LoginPageState extends State<LoginPage> {
       MaterialPageRoute(builder: (context) => const AuthPage()),
       (Route<dynamic> route) => false, // This predicate will always return false, removing all routes below the new route
     );
+  }
+  void googleSignIn() async {
+    // Trigger the authentication flow
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+    // If the user is signed in, get the authentication token
+    final GoogleSignInAuthentication? googleUserAuth = await googleUser?.authentication;
+    // Create a credential from the authentication token
+    final credential = GoogleAuthProvider.credential(idToken: googleUserAuth?.idToken, accessToken: googleUserAuth?.accessToken);
+    // Sign in with the credential
+    await FirebaseAuth.instance.signInWithCredential(credential);
+    clearStackAndRedirectToHomePage(context);
   }
   
   void loginUser() async {
@@ -107,14 +119,28 @@ class _LoginPageState extends State<LoginPage> {
                 obscureText: true,
                 keyboardType: TextInputType.text,
               ),
-              TextButton(
-                onPressed: () {},
-                child: const Text('Forgot password?'),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  TextButton(
+                    style: TextButton.styleFrom(padding: const EdgeInsets.symmetric(horizontal: 25)),
+                    onPressed: () {},
+                    child: const Text('Forgot password?'),
+                  ),
+                ],
               ),
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () => loginUser(),
                 child: const Text('Login'),
+              ),
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  IconButton(onPressed: () => {}, icon: const Icon(Icons.facebook)),
+                  IconButton(onPressed: () => googleSignIn(), icon: const Icon(Icons.search)),
+                ],
               ),
               TextButton(
                 onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterPage())),
