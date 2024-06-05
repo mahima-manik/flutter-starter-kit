@@ -26,6 +26,10 @@ class _LoginPageState extends State<LoginPage> {
   void googleSignIn() async {
     // Trigger the authentication flow
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+    // If the user is not signed in or canceled, return
+    if (googleUser == null) {
+      return;
+    }
     // If the user is signed in, get the authentication token
     final GoogleSignInAuthentication? googleUserAuth = await googleUser?.authentication;
     // Create a credential from the authentication token
