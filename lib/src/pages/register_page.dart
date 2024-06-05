@@ -3,21 +3,40 @@ import 'package:flutter/material.dart';
 
 import '../components/alert_dialog.dart';
 import '../components/text_field.dart';
-import 'register_page.dart';
+import 'auth_page.dart';
 
-class LoginPage extends StatefulWidget {
+class RegisterPage extends StatefulWidget {
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _RegisterPageState createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
 
-  void loginUser() async {
+  void clearStackAndRedirectToHomePage(BuildContext context) {
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (context) => const AuthPage()),
+      (Route<dynamic> route) => false, // This predicate will always return false, removing all routes below the new route
+    );
+  }
+  void registerUser() async {
     final email = emailController.text.trim();
     final password = passwordController.text.trim();
-    if (email.isEmpty || password.isEmpty) {
+    final confirmPassword = confirmPasswordController.text.trim();
+    if (email.isEmpty || password.isEmpty || confirmPassword.isEmpty) {
+      return;
+    }
+    if (password != confirmPassword) {
+      showDialog(
+        context: context,
+        builder: (context) => const CustomAlertDialog(
+          title: 'Password mismatch',
+          message: 'The password and confirm password fields do not match. Please try again.',
+        ),
+      );
       return;
     }
     showDialog(
@@ -25,25 +44,25 @@ class _LoginPageState extends State<LoginPage> {
       builder: (context) => const Center(child: CircularProgressIndicator()),
     );
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
+      UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-      Navigator.pop(context);
+      clearStackAndRedirectToHomePage(context);
     } on FirebaseAuthException catch (e) {
       Navigator.pop(context); // Close the CircularProgressIndicator
       showDialog(
         context: context,
         builder: (context) {
-          if (e.code == 'user-not-found') {
+          if (e.code == 'email-already-in-use') {
             return const CustomAlertDialog(
-              title: 'User not found',
-              message: 'The email you entered does not exist. Please try again.',
+              title: 'Email already in use',
+              message: 'The email you entered is already in use. Please try with a different email.',
             );
-          } else if (e.code == 'wrong-password') {
+          } else if (e.code == 'weak-password') {
             return const CustomAlertDialog(
-              title: 'Wrong password',
-              message: 'The password you entered is incorrect. Please try again.',
+              title: 'Weak password',
+              message: 'The password you entered is too weak.'
             );
           } else {
             return CustomAlertDialog(
@@ -54,6 +73,7 @@ class _LoginPageState extends State<LoginPage> {
         },
       );
     } catch (e) {
+      Navigator.pop(context);
       showDialog(
         context: context,
         builder: (context) => CustomAlertDialog(
@@ -79,7 +99,7 @@ class _LoginPageState extends State<LoginPage> {
                 height: 200,
               ),
               const Text(
-                'hey there!',
+                'let\'s get started!',
                 style: TextStyle(fontSize: 30),
               ),
               const SizedBox(height: 20),
@@ -98,19 +118,18 @@ class _LoginPageState extends State<LoginPage> {
                 obscureText: true,
                 keyboardType: TextInputType.text,
               ),
-              TextButton(
-                onPressed: () {},
-                child: const Text('Forgot password?'),
+              const SizedBox(height: 20),
+              FormTextField(
+                controller: confirmPasswordController,
+                label: 'Confirm Password',
+                hintText: 'Reenter password',
+                obscureText: true,
+                keyboardType: TextInputType.text,
               ),
               const SizedBox(height: 20),
               ElevatedButton(
-                onPressed: () => loginUser(),
-                child: const Text('Login'),
-              ),
-              // Not a user? Register now
-              TextButton(
-                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterPage())),
-                child: const Text('Not a user? Register now'),
+                onPressed: () => registerUser(),
+                child: const Text('Register'),
               ),
             ],
           ),
