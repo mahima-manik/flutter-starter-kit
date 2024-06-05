@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../components/alert_dialog.dart';
 import '../components/text_field.dart';
+import 'auth_page.dart';
 import 'register_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -14,6 +15,14 @@ class _LoginPageState extends State<LoginPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
+  void clearStackAndRedirectToHomePage(BuildContext context) {
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (context) => const AuthPage()),
+      (Route<dynamic> route) => false, // This predicate will always return false, removing all routes below the new route
+    );
+  }
+  
   void loginUser() async {
     final email = emailController.text.trim();
     final password = passwordController.text.trim();
@@ -29,7 +38,7 @@ class _LoginPageState extends State<LoginPage> {
         email: email,
         password: password,
       );
-      Navigator.pop(context);
+      clearStackAndRedirectToHomePage(context);
     } on FirebaseAuthException catch (e) {
       Navigator.pop(context); // Close the CircularProgressIndicator
       showDialog(
@@ -107,7 +116,6 @@ class _LoginPageState extends State<LoginPage> {
                 onPressed: () => loginUser(),
                 child: const Text('Login'),
               ),
-              // Not a user? Register now
               TextButton(
                 onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterPage())),
                 child: const Text('Not a user? Register now'),

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../components/alert_dialog.dart';
 import '../components/text_field.dart';
 import 'auth_page.dart';
+import 'login_page.dart';
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -22,6 +23,7 @@ class _RegisterPageState extends State<RegisterPage> {
       (Route<dynamic> route) => false, // This predicate will always return false, removing all routes below the new route
     );
   }
+
   void registerUser() async {
     final email = emailController.text.trim();
     final password = passwordController.text.trim();
@@ -130,6 +132,10 @@ class _RegisterPageState extends State<RegisterPage> {
               ElevatedButton(
                 onPressed: () => registerUser(),
                 child: const Text('Register'),
+              ),
+              TextButton(
+                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage())),
+                child: const Text('Already a user? Login now'),
               ),
             ],
           ),
