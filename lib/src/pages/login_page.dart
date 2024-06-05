@@ -12,12 +12,16 @@ class _LoginPageState extends State<LoginPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  loginUser() async {
+  void loginUser() async {
     final email = emailController.text.trim();
     final password = passwordController.text.trim();
     if (email.isEmpty || password.isEmpty) {
       return;
     }
+    showDialog(
+      context: context,
+      builder: (context) => const Center(child: CircularProgressIndicator()),
+    );
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
@@ -26,6 +30,7 @@ class _LoginPageState extends State<LoginPage> {
     } catch (e) {
       print(e);
     }
+    Navigator.pop(context);
   }
 
   @override

@@ -16,6 +16,12 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool isDarkMode = false;
+
+  String? getUserEmail() {
+    final user = FirebaseAuth.instance.currentUser;
+    return user?.email;
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,9 +36,11 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       body: Center(
-        child: Row(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            if (getUserEmail() != null) Text('Signed in as ${getUserEmail()}'),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 Navigator.push(
