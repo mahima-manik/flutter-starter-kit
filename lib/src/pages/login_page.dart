@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../components/alert_dialog.dart';
 import '../components/text_field.dart';
 
 class LoginPage extends StatefulWidget {
@@ -27,10 +28,39 @@ class _LoginPageState extends State<LoginPage> {
         email: email,
         password: password,
       );
+      Navigator.pop(context);
+    } on FirebaseAuthException catch (e) {
+      Navigator.pop(context); // Close the CircularProgressIndicator
+      showDialog(
+        context: context,
+        builder: (context) {
+          if (e.code == 'user-not-found') {
+            return const CustomAlertDialog(
+              title: 'User not found',
+              message: 'The email you entered does not exist. Please try again.',
+            );
+          } else if (e.code == 'wrong-password') {
+            return const CustomAlertDialog(
+              title: 'Wrong password',
+              message: 'The password you entered is incorrect. Please try again.',
+            );
+          } else {
+            return CustomAlertDialog(
+              title: 'Some error occurred',
+              message: e.message ?? 'An error occurred while logging in. Please try again.',
+            );
+          }
+        },
+      );
     } catch (e) {
-      print(e);
+      showDialog(
+        context: context,
+        builder: (context) => CustomAlertDialog(
+          title: 'Some error occurred',
+          message: e.toString(),
+        ),
+      );
     }
-    Navigator.pop(context);
   }
 
   @override
