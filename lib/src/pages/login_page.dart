@@ -142,8 +142,21 @@ class _LoginPageState extends State<LoginPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  IconButton(onPressed: () => {}, icon: const Icon(Icons.facebook)),
-                  IconButton(onPressed: () => googleSignIn(), icon: const Icon(Icons.search)),
+                  // use logo in assets/images
+                  GestureDetector(
+                    onTap: () => googleSignIn(),
+                    child: Image.asset(
+                      'assets/images/google-logo.png',
+                      width: 20,
+                      height: 20,
+                    ),
+                  ),
+                  const SizedBox(width: 20),
+                  Image.asset(
+                    'assets/images/facebook-logo.png',
+                    width: 22,
+                    height: 22,
+                  ),
                 ],
               ),
               TextButton(
