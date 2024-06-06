@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import '../components/alert_dialog.dart';
 import '../components/text_field.dart';
@@ -22,6 +23,22 @@ class _RegisterPageState extends State<RegisterPage> {
       MaterialPageRoute(builder: (context) => const AuthPage()),
       (Route<dynamic> route) => false, // This predicate will always return false, removing all routes below the new route
     );
+  }
+
+  void googleSignIn() async {
+    // Trigger the authentication flow
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+    // If the user is not signed in or canceled, return
+    if (googleUser == null) {
+      return;
+    }
+    // If the user is signed in, get the authentication token
+    final GoogleSignInAuthentication? googleUserAuth = await googleUser?.authentication;
+    // Create a credential from the authentication token
+    final credential = GoogleAuthProvider.credential(idToken: googleUserAuth?.idToken, accessToken: googleUserAuth?.accessToken);
+    // Sign in with the credential
+    await FirebaseAuth.instance.signInWithCredential(credential);
+    clearStackAndRedirectToHomePage(context);
   }
 
   void registerUser() async {
@@ -94,7 +111,6 @@ class _RegisterPageState extends State<RegisterPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const SizedBox(height: 30),
               Image.asset(
                 'assets/images/sample_logo.png',
                 width: 200,
@@ -133,9 +149,66 @@ class _RegisterPageState extends State<RegisterPage> {
                 onPressed: () => registerUser(),
                 child: const Text('Register'),
               ),
-              TextButton(
-                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage())),
-                child: const Text('Already a user? Login now'),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: Divider(
+                        color: Theme.of(context).colorScheme.secondary,
+                        thickness: 1,
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Text('Or continue with', style: TextStyle(color: Theme.of(context).colorScheme.primary),),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Divider(
+                        color: Theme.of(context).colorScheme.secondary,
+                        thickness: 1,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  GestureDetector(
+                    onTap: () => googleSignIn(),
+                    child: Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), color: Theme.of(context).colorScheme.surface),
+                      child: Image.asset(
+                        'assets/images/google-logo.png',
+                        width: 30,
+                        height: 30,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 30),
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), color: Theme.of(context).colorScheme.surface),
+                    child: Image.asset(
+                      'assets/images/facebook-logo.png',
+                      width: 35,
+                      height: 35,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text('Already a user? '),
+                  GestureDetector(
+                    onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage())),
+                    child: const Text('Login now', style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),),
+                  ),
+                ],
               ),
             ],
           ),

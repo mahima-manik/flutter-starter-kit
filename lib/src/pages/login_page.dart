@@ -143,7 +143,6 @@ class _LoginPageState extends State<LoginPage> {
                 onPressed: () => loginUser(),
                 child: const Text('Login'),
               ),
-              // Add a divider line
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
                 child: Row(
@@ -197,12 +196,11 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(height: 20),
               Row (
                 mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text('Not a user? '),
                   GestureDetector(
                     onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterPage())),
-                    child: const Text('Register now', style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),),
+                    child: const Text('Sign up', style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),),
                   ),
                 ],
               ),
