@@ -143,24 +143,54 @@ class _LoginPageState extends State<LoginPage> {
                 onPressed: () => loginUser(),
                 child: const Text('Login'),
               ),
-              const SizedBox(height: 20),
+              // Add a divider line
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: Divider(
+                        color: Theme.of(context).colorScheme.secondary,
+                        thickness: 1,
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Text('Or continue with', style: TextStyle(color: Theme.of(context).colorScheme.primary),),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Divider(
+                        color: Theme.of(context).colorScheme.secondary,
+                        thickness: 1,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // use logo in assets/images
                   GestureDetector(
                     onTap: () => googleSignIn(),
-                    child: Image.asset(
-                      'assets/images/google-logo.png',
-                      width: 30,
-                      height: 30,
+                    child: Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), color: Theme.of(context).colorScheme.surface),
+                      child: Image.asset(
+                        'assets/images/google-logo.png',
+                        width: 30,
+                        height: 30,
+                      ),
                     ),
                   ),
                   const SizedBox(width: 30),
-                  Image.asset(
-                    'assets/images/facebook-logo.png',
-                    width: 35,
-                    height: 35,
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), color: Theme.of(context).colorScheme.surface),
+                    child: Image.asset(
+                      'assets/images/facebook-logo.png',
+                      width: 35,
+                      height: 35,
+                    ),
                   ),
                 ],
               ),
