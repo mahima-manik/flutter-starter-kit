@@ -1,9 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
-import '../components/alert_dialog.dart';
 import '../components/text_field.dart';
+import '../services/auth_service.dart';
 import 'auth_page.dart';
 import 'register_page.dart';
 
@@ -15,80 +13,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-
-  void clearStackAndRedirectToHomePage(BuildContext context) {
-    Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(builder: (context) => const AuthPage()),
-      (Route<dynamic> route) => false, // This predicate will always return false, removing all routes below the new route
-    );
-  }
-  void googleSignIn() async {
-    // Trigger the authentication flow
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-    // If the user is not signed in or canceled, return
-    if (googleUser == null) {
-      return;
-    }
-    // If the user is signed in, get the authentication token
-    final GoogleSignInAuthentication? googleUserAuth = await googleUser?.authentication;
-    // Create a credential from the authentication token
-    final credential = GoogleAuthProvider.credential(idToken: googleUserAuth?.idToken, accessToken: googleUserAuth?.accessToken);
-    // Sign in with the credential
-    await FirebaseAuth.instance.signInWithCredential(credential);
-    clearStackAndRedirectToHomePage(context);
-  }
   
-  void loginUser() async {
-    final email = emailController.text.trim();
-    final password = passwordController.text.trim();
-    if (email.isEmpty || password.isEmpty) {
-      return;
-    }
-    showDialog(
-      context: context,
-      builder: (context) => const Center(child: CircularProgressIndicator()),
-    );
-    try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-      clearStackAndRedirectToHomePage(context);
-    } on FirebaseAuthException catch (e) {
-      Navigator.pop(context); // Close the CircularProgressIndicator
-      showDialog(
-        context: context,
-        builder: (context) {
-          if (e.code == 'user-not-found') {
-            return const CustomAlertDialog(
-              title: 'User not found',
-              message: 'The email you entered does not exist. Please try again.',
-            );
-          } else if (e.code == 'wrong-password') {
-            return const CustomAlertDialog(
-              title: 'Wrong password',
-              message: 'The password you entered is incorrect. Please try again.',
-            );
-          } else {
-            return CustomAlertDialog(
-              title: 'Some error occurred',
-              message: e.message ?? 'An error occurred while logging in. Please try again.',
-            );
-          }
-        },
-      );
-    } catch (e) {
-      showDialog(
-        context: context,
-        builder: (context) => CustomAlertDialog(
-          title: 'Some error occurred',
-          message: e.toString(),
-        ),
-      );
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -140,7 +65,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
               const SizedBox(height: 20),
               ElevatedButton(
-                onPressed: () => loginUser(),
+                onPressed: () => AuthService.signInWithUsernameAndPassword(context, emailController.text.trim(), passwordController.text.trim(), const AuthPage()),
                 child: const Text('Login'),
               ),
               Padding(
@@ -170,7 +95,7 @@ class _LoginPageState extends State<LoginPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   GestureDetector(
-                    onTap: () => googleSignIn(),
+                    onTap: () => AuthService.googleSignIn(context, const AuthPage()),
                     child: Container(
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), color: Theme.of(context).colorScheme.surface),

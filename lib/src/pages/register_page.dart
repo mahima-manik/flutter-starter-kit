@@ -1,9 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
-import '../components/alert_dialog.dart';
 import '../components/text_field.dart';
+import '../services/auth_service.dart';
 import 'auth_page.dart';
 import 'login_page.dart';
 
@@ -16,92 +14,6 @@ class _RegisterPageState extends State<RegisterPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
-
-  void clearStackAndRedirectToHomePage(BuildContext context) {
-    Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(builder: (context) => const AuthPage()),
-      (Route<dynamic> route) => false, // This predicate will always return false, removing all routes below the new route
-    );
-  }
-
-  void googleSignIn() async {
-    // Trigger the authentication flow
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-    // If the user is not signed in or canceled, return
-    if (googleUser == null) {
-      return;
-    }
-    // If the user is signed in, get the authentication token
-    final GoogleSignInAuthentication? googleUserAuth = await googleUser?.authentication;
-    // Create a credential from the authentication token
-    final credential = GoogleAuthProvider.credential(idToken: googleUserAuth?.idToken, accessToken: googleUserAuth?.accessToken);
-    // Sign in with the credential
-    await FirebaseAuth.instance.signInWithCredential(credential);
-    clearStackAndRedirectToHomePage(context);
-  }
-
-  void registerUser() async {
-    final email = emailController.text.trim();
-    final password = passwordController.text.trim();
-    final confirmPassword = confirmPasswordController.text.trim();
-    if (email.isEmpty || password.isEmpty || confirmPassword.isEmpty) {
-      return;
-    }
-    if (password != confirmPassword) {
-      showDialog(
-        context: context,
-        builder: (context) => const CustomAlertDialog(
-          title: 'Password mismatch',
-          message: 'The password and confirm password fields do not match. Please try again.',
-        ),
-      );
-      return;
-    }
-    showDialog(
-      context: context,
-      builder: (context) => const Center(child: CircularProgressIndicator()),
-    );
-    try {
-      UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-      clearStackAndRedirectToHomePage(context);
-    } on FirebaseAuthException catch (e) {
-      Navigator.pop(context); // Close the CircularProgressIndicator
-      showDialog(
-        context: context,
-        builder: (context) {
-          if (e.code == 'email-already-in-use') {
-            return const CustomAlertDialog(
-              title: 'Email already in use',
-              message: 'The email you entered is already in use. Please try with a different email.',
-            );
-          } else if (e.code == 'weak-password') {
-            return const CustomAlertDialog(
-              title: 'Weak password',
-              message: 'The password you entered is too weak.'
-            );
-          } else {
-            return CustomAlertDialog(
-              title: 'Some error occurred',
-              message: e.message ?? 'An error occurred while logging in. Please try again.',
-            );
-          }
-        },
-      );
-    } catch (e) {
-      Navigator.pop(context);
-      showDialog(
-        context: context,
-        builder: (context) => CustomAlertDialog(
-          title: 'Some error occurred',
-          message: e.toString(),
-        ),
-      );
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -146,7 +58,7 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
               const SizedBox(height: 20),
               ElevatedButton(
-                onPressed: () => registerUser(),
+                onPressed: () => AuthService.registerUser(context, emailController.text.trim(), passwordController.text.trim(), const AuthPage()),
                 child: const Text('Register'),
               ),
               Padding(
@@ -176,7 +88,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   GestureDetector(
-                    onTap: () => googleSignIn(),
+                    onTap: () => AuthService.googleSignIn(context, const AuthPage()),
                     child: Container(
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), color: Theme.of(context).colorScheme.surface),
