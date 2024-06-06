@@ -147,21 +147,29 @@ class _LoginPageState extends State<LoginPage> {
                     onTap: () => googleSignIn(),
                     child: Image.asset(
                       'assets/images/google-logo.png',
-                      width: 20,
-                      height: 20,
+                      width: 30,
+                      height: 30,
                     ),
                   ),
-                  const SizedBox(width: 20),
+                  const SizedBox(width: 30),
                   Image.asset(
                     'assets/images/facebook-logo.png',
-                    width: 22,
-                    height: 22,
+                    width: 35,
+                    height: 35,
                   ),
                 ],
               ),
-              TextButton(
-                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterPage())),
-                child: const Text('Not a user? Register now'),
+              const SizedBox(height: 20),
+              Row (
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text('Not a user? '),
+                  GestureDetector(
+                    onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterPage())),
+                    child: const Text('Register now', style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),),
+                  ),
+                ],
               ),
             ],
           ),
