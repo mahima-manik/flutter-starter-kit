@@ -126,10 +126,15 @@ class _LoginPageState extends State<LoginPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  TextButton(
-                    style: TextButton.styleFrom(padding: const EdgeInsets.symmetric(horizontal: 25)),
-                    onPressed: () {},
-                    child: const Text('Forgot password?'),
+                  GestureDetector(
+                    onTap: () {},
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 5),
+                      child: Text(
+                        'Forgot password?', 
+                        style: TextStyle(color: Theme.of(context).colorScheme.secondary, fontWeight: FontWeight.bold),
+                      ),
+                    ),
                   ),
                 ],
               ),
