@@ -69,3 +69,8 @@ To build, increase your application's deployment target to at least
 
     Solution: Go to ios/Podfile and add `platform :ios, '13.0'` to the top of the file to fix this error.
 
+## Tutorial to learn about authentication
+One can use default LoginScreen and  from Firebase to handle authentication.
+1. https://firebase.google.com/codelabs/firebase-auth-in-flutter-apps
+2. https://firebase.flutter.dev/docs/ui/auth/integrating-your-first-screen/
+

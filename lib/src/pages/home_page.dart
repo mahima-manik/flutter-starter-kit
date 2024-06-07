@@ -18,6 +18,18 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool isDarkMode = false;
+  User? user;
+
+  @override
+  void initState() {
+    super.initState();
+    user = FirebaseAuth.instance.currentUser;
+    FirebaseAuth.instance.userChanges().listen((User? user) {
+      setState(() {
+        this.user = user;
+      });
+    });
+  }
 
   String? getUserEmail() {
     final user = FirebaseAuth.instance.currentUser;
@@ -39,8 +51,8 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Welcome, ${FirebaseAuth.instance.currentUser?.displayName ?? 'No display name'}'),
-            if (getUserEmail() != null) Text('Signed in as ${getUserEmail()}'),
+            if (user?.displayName != null) Text('Welcome, ${user?.displayName}'),
+            if (user?.email != null) Text('Signed in as ${user?.email}'),
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {

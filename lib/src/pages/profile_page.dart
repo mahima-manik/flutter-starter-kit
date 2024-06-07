@@ -33,7 +33,9 @@ class _ProfilePageState extends State<ProfilePage> {
     try {
       await user!.updateDisplayName(displayName);
       await user!.reload();
-      user = FirebaseAuth.instance.currentUser;
+      setState(() {
+        user = FirebaseAuth.instance.currentUser;
+      });
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Profile updated successfully')));
       Navigator.pop(context);
     } catch (e) {
@@ -80,7 +82,6 @@ class _ProfilePageState extends State<ProfilePage> {
               child: const Text('Update'),
             ),
             const SizedBox(height: 20),
-            Text(user?.displayName ?? 'No name yet'),
           ],
         ),
       ),
