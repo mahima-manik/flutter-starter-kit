@@ -52,9 +52,10 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                         )
-                      : const CircleAvatar(
+                      : CircleAvatar(
                           radius: 30,
-                          child: Icon(Icons.person, size: 30),
+                          backgroundColor: Theme.of(context).colorScheme.secondary,
+                          child: Icon(Icons.person, size: 30, color: Theme.of(context).colorScheme.onSecondary),
                         ),
                   ),
                 ],
@@ -71,8 +72,8 @@ class _HomePageState extends State<HomePage> {
         Padding(
           padding: const EdgeInsets.all(20.0),
           child: ListTile(
-              leading: Icon(Icons.logout, color: Theme.of(context).colorScheme.primary),
-              title: Text('Logout', style: TextStyle(color: Theme.of(context).colorScheme.primary)),
+              leading: Icon(Icons.logout, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5)),
+              title: Text('Logout', style: TextStyle(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5))),
               onTap: () {
                 FirebaseAuth.instance.signOut();
                 Navigator.pop(context); // Close the drawer
