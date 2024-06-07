@@ -10,14 +10,20 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   final TextEditingController _displayNameController = TextEditingController();
-  User? user = FirebaseAuth.instance.currentUser;
+  User? user;
   
   @override
   void initState() {
     super.initState();
+    user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       _displayNameController.text = user!.displayName ?? '';
     }
+    FirebaseAuth.instance.userChanges().listen((User? user) {
+      setState(() {
+        this.user = user;
+      });
+    });
   }
 
   void updateDisplayName() async {
@@ -33,9 +39,6 @@ class _ProfilePageState extends State<ProfilePage> {
     try {
       await user!.updateDisplayName(displayName);
       await user!.reload();
-      setState(() {
-        user = FirebaseAuth.instance.currentUser;
-      });
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Profile updated successfully')));
       Navigator.pop(context);
     } catch (e) {
@@ -47,7 +50,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Edit Profile'),
+        title: const Text('Edit Profile'),
       ),
       body: SingleChildScrollView(
         child: Column(
