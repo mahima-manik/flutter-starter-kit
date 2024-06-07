@@ -30,11 +30,59 @@ class _HomePageState extends State<HomePage> {
           IconButton(icon: const Icon(Icons.brightness_4), onPressed: () {
             Provider.of<ThemeProvider>(context, listen: false).toggleTheme();
           }),
-          IconButton(icon: const Icon(Icons.logout), onPressed: () {
-            FirebaseAuth.instance.signOut();
-          }),
         ],
       ),
+  drawer: Drawer(
+    child: Column(
+      children: [
+        Expanded(
+          child: ListView(
+            children: [
+              DrawerHeader(
+              child: Column(
+                children: [
+                  Expanded(
+                    child: FirebaseAuth.instance.currentUser?.photoURL != null
+                      ? CircleAvatar(
+                          radius: 30,
+                          child: ClipOval(
+                            child: Image.network(
+                              FirebaseAuth.instance.currentUser!.photoURL!,
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                        )
+                      : const CircleAvatar(
+                          radius: 30,
+                          child: Icon(Icons.person, size: 30),
+                        ),
+                  ),
+                ],
+              ),
+            ),
+            ListTile(
+              leading: const Icon(Icons.home),
+              title: const Text('H O M E'),
+              onTap: () => Navigator.pop(context),
+            ),
+          ],
+        ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: ListTile(
+              leading: Icon(Icons.logout, color: Theme.of(context).colorScheme.primary),
+              title: Text('Logout', style: TextStyle(color: Theme.of(context).colorScheme.primary)),
+              onTap: () {
+                FirebaseAuth.instance.signOut();
+                Navigator.pop(context); // Close the drawer
+              },
+            ),
+        ),
+      ],
+    ),
+  ),
+
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
