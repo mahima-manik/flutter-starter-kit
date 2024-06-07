@@ -56,21 +56,39 @@ class _ProfilePageState extends State<ProfilePage> {
         child: Column(
           children: [
             const SizedBox(height: 20),
-            user?.photoURL != null
-              ? CircleAvatar(
-                  radius: 30,
-                  child: ClipOval(
-                    child: Image.network(
-                      user!.photoURL!,
-                      fit: BoxFit.contain,
-                    ),
+            Stack(
+              alignment: Alignment.bottomRight,
+              children: [
+                user?.photoURL != null
+                  ? CircleAvatar(
+                      radius: 30,
+                      child: ClipOval(
+                        child: Image.network(
+                          user!.photoURL!,
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                    )
+                  : CircleAvatar(
+                    radius: 30,
+                    backgroundColor: Theme.of(context).colorScheme.secondary,
+                    child: Icon(Icons.person, size: 30, color: Theme.of(context).colorScheme.onSecondary),
                   ),
-                )
-              : CircleAvatar(
-                  radius: 30,
-                  backgroundColor: Theme.of(context).colorScheme.secondary,
-                  child: Icon(Icons.person, size: 30, color: Theme.of(context).colorScheme.onSecondary),
+                GestureDetector(
+                  onTap: () {
+                    // Implement your tap functionality here
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.secondary,
+                      shape: BoxShape.circle
+                    ),
+                    child: Icon(Icons.edit, size: 15, color: Theme.of(context).colorScheme.onSecondary),
+                  ),
                 ),
+              ],
+            ),
             const SizedBox(height: 20),
             FormTextField(
                 controller: _displayNameController,
