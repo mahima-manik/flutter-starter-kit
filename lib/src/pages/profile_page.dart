@@ -20,6 +20,27 @@ class _ProfilePageState extends State<ProfilePage> {
     }
   }
 
+  void updateDisplayName() async {
+    String displayName = _displayNameController.text;
+    if (displayName.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Name is required')));
+      return;
+    }
+    showDialog(
+      context: context,
+      builder: (context) => const Center(child: CircularProgressIndicator()),
+    );
+    try {
+      await user!.updateDisplayName(displayName);
+      await user!.reload();
+      user = FirebaseAuth.instance.currentUser;
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Profile updated successfully')));
+      Navigator.pop(context);
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to update profile: $e')));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,9 +76,11 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: updateDisplayName,
               child: const Text('Update'),
             ),
+            const SizedBox(height: 20),
+            Text(user?.displayName ?? 'No name yet'),
           ],
         ),
       ),
