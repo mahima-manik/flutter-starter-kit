@@ -6,6 +6,7 @@ import '../theme/theme_provider.dart';
 import 'package:provider/provider.dart';
 
 import 'product_info.dart';
+import 'profile_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -31,7 +32,7 @@ class _HomePageState extends State<HomePage> {
             Provider.of<ThemeProvider>(context, listen: false).toggleTheme();
           }),
         ],
-      ),
+  ),
   drawer: Drawer(
     child: Column(
       children: [
@@ -63,8 +64,13 @@ class _HomePageState extends State<HomePage> {
             ),
             ListTile(
               leading: const Icon(Icons.home),
-              title: const Text('H O M E'),
+              title: const Text('Home'),
               onTap: () => Navigator.pop(context),
+            ),
+            ListTile(
+              leading: const Icon(Icons.person),
+              title: const Text('Edit Profile'),
+              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage())),
             ),
           ],
         ),
@@ -88,6 +94,7 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Text('Welcome, ${FirebaseAuth.instance.currentUser?.displayName ?? 'No display name'}'),
             if (getUserEmail() != null) Text('Signed in as ${getUserEmail()}'),
             const SizedBox(height: 20),
             ElevatedButton(
