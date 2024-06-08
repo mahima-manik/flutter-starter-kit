@@ -36,9 +36,7 @@ class AuthService {
   Future<User?> googleSignIn() async {
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
     if (googleUser == null) {
-      throw Exception(
-        'Google sign-in was aborted by the user',
-      );
+      return null;
     }
     final GoogleSignInAuthentication googleUserAuth = await googleUser.authentication;
     final credential = GoogleAuthProvider.credential(

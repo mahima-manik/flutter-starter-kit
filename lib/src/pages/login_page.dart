@@ -86,6 +86,11 @@ class _LoginPageState extends State<LoginPage> {
     );
     try {
       await context.read<UserAuthProvider>().googleSignIn();
+      if (!mounted) return;
+      if (context.read<UserAuthProvider>().user == null) { 
+        Navigator.pop(context);
+        return;
+      }
       clearStackAndRedirectToPage(const AuthPage());
     } catch (e) {
       if (!mounted) return;
