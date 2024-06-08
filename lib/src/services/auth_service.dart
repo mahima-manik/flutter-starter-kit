@@ -120,4 +120,10 @@ class AuthService {
     await FirebaseAuth.instance.signInWithCredential(credential);
     clearStackAndRedirectToPage(context, pageToRedirect);
   }
+
+  static Future<void> updateUserPhoto(BuildContext context, String photoURL) async {    
+      final user = FirebaseAuth.instance.currentUser;
+      await user!.updatePhotoURL(photoURL);      
+  }
+
 }

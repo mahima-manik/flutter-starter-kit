@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../components/text_field.dart';
+import '../services/auth_service.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -11,6 +14,7 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   final TextEditingController _displayNameController = TextEditingController();
   User? user;
+  StreamSubscription? _userChangesSubscription;
   
   @override
   void initState() {
@@ -19,12 +23,13 @@ class _ProfilePageState extends State<ProfilePage> {
     if (user != null) {
       _displayNameController.text = user!.displayName ?? '';
     }
-    FirebaseAuth.instance.userChanges().listen((User? user) {
+    _userChangesSubscription = FirebaseAuth.instance.userChanges().listen((User? user) {
       setState(() {
         this.user = user;
       });
     });
   }
+
 
   void updateDisplayName() async {
     String displayName = _displayNameController.text;
@@ -40,6 +45,21 @@ class _ProfilePageState extends State<ProfilePage> {
       await user!.updateDisplayName(displayName);
       await user!.reload();
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Profile updated successfully')));
+      Navigator.pop(context);
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to update profile: $e')));
+    }
+  }
+
+  void updateDisplayPhoto() async {
+    showDialog(
+      context: context,
+      builder: (context) => const Center(child: CircularProgressIndicator()),
+    );
+    try {
+      await AuthService.updateUserPhoto(context, 'https://picsum.photos/300/300');
+      await user!.reload();
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Profile picture updated successfully')));
       Navigator.pop(context);
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to update profile: $e')));
@@ -75,9 +95,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     child: Icon(Icons.person, size: 30, color: Theme.of(context).colorScheme.onSecondary),
                   ),
                 GestureDetector(
-                  onTap: () {
-                    // Implement your tap functionality here
-                  },
+                  onTap: updateDisplayPhoto,
                   child: Container(
                     padding: const EdgeInsets.all(5),
                     decoration: BoxDecoration(
