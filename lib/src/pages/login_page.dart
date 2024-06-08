@@ -1,9 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../auth/auth_provider.dart';
+import '../components/alert_dialog.dart';
 import '../components/text_field.dart';
-import '../services/auth_service.dart';
 import 'auth_page.dart';
-import 'register_page.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -14,6 +16,89 @@ class _LoginPageState extends State<LoginPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   
+  void clearStackAndRedirectToPage(Widget pageToRedirect) {
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (context) => pageToRedirect),
+      (Route<dynamic> route) => false, // This predicate will always return false, removing all routes below the new route
+    );
+  }
+
+  Future<void> signInWithUsernameAndPassword() async {
+    if (emailController.text.isEmpty || passwordController.text.isEmpty) {
+      showDialog(
+        context: context,
+        builder: (context) => const CustomAlertDialog(
+          title: 'Error',
+          message: 'Please enter your email and password.',
+        ),
+      );
+      return;
+    }
+    showDialog(
+      context: context,
+      builder: (context) => const Center(child: CircularProgressIndicator()),
+    );
+    try {
+      await context.read<UserAuthProvider>().signInWithUsernameAndPassword(emailController.text.trim(), passwordController.text.trim());
+      clearStackAndRedirectToPage(const AuthPage());
+    } on FirebaseAuthException catch (e) {
+      if (!mounted) return;
+      Navigator.pop(context);
+      showDialog(
+        context: context,
+        builder: (context) {
+          if (e.code == 'user-not-found') {
+            return const CustomAlertDialog(
+              title: 'User not found',
+              message: 'The email you entered does not exist. Please try again.',
+            );
+          } else if (e.code == 'wrong-password') {
+            return const CustomAlertDialog(
+              title: 'Wrong password',
+              message: 'The password you entered is incorrect. Please try again.',
+            );
+          } else {
+            return CustomAlertDialog(
+              title: 'Some error occurred',
+              message: e.message ?? 'An error occurred while logging in. Please try again.',
+            );
+          }
+        },
+      );
+    } catch (e) {
+      if (!mounted) return;
+      showDialog(
+        context: context,
+        builder: (context) => CustomAlertDialog(
+          title: 'Some error occurred',
+          message: e.toString(),
+        ),
+      );
+    }
+  }
+
+  Future<void> signInWithGoogle() async {
+    if (!context.mounted) return;
+    showDialog(
+      context: context,
+      builder: (context) => const Center(child: CircularProgressIndicator()),
+    );
+    try {
+      await context.read<UserAuthProvider>().googleSignIn();
+      clearStackAndRedirectToPage(const AuthPage());
+    } catch (e) {
+      if (!mounted) return;
+      Navigator.pop(context);
+      showDialog(
+        context: context,
+        builder: (context) => CustomAlertDialog(
+          title: 'Some error occurred',
+          message: e.toString(),
+        ),
+      );
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,7 +150,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
               const SizedBox(height: 20),
               ElevatedButton(
-                onPressed: () => AuthService.signInWithUsernameAndPassword(context, emailController.text.trim(), passwordController.text.trim(), const AuthPage()),
+                onPressed: () => signInWithUsernameAndPassword(),
                 child: const Text('Login'),
               ),
               Padding(
@@ -95,7 +180,7 @@ class _LoginPageState extends State<LoginPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   GestureDetector(
-                    onTap: () => AuthService.googleSignIn(context, const AuthPage()),
+                    onTap: () => signInWithGoogle(),
                     child: Container(
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), color: Theme.of(context).colorScheme.surface),
@@ -124,7 +209,7 @@ class _LoginPageState extends State<LoginPage> {
                 children: [
                   const Text('Not a user? '),
                   GestureDetector(
-                    onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterPage())),
+                    onTap: () => {},
                     child: const Text('Sign up', style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),),
                   ),
                 ],

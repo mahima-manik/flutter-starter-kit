@@ -5,27 +5,27 @@ PODS:
   - AppAuth/Core (1.7.5)
   - AppAuth/ExternalUserAgent (1.7.5):
     - AppAuth/Core
-  - Firebase/Auth (10.27.0):
+  - Firebase/Auth (10.25.0):
     - Firebase/CoreOnly
-    - FirebaseAuth (~> 10.27.0)
-  - Firebase/CoreOnly (10.27.0):
-    - FirebaseCore (= 10.27.0)
-  - firebase_auth (5.0.0):
-    - Firebase/Auth (= 10.27.0)
+    - FirebaseAuth (~> 10.25.0)
+  - Firebase/CoreOnly (10.25.0):
+    - FirebaseCore (= 10.25.0)
+  - firebase_auth (4.20.0):
+    - Firebase/Auth (= 10.25.0)
     - firebase_core
     - Flutter
-  - firebase_core (3.0.0):
-    - Firebase/CoreOnly (= 10.27.0)
+  - firebase_core (2.32.0):
+    - Firebase/CoreOnly (= 10.25.0)
     - Flutter
   - FirebaseAppCheckInterop (10.27.0)
-  - FirebaseAuth (10.27.0):
+  - FirebaseAuth (10.25.0):
     - FirebaseAppCheckInterop (~> 10.17)
     - FirebaseCore (~> 10.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.8)
     - GoogleUtilities/Environment (~> 7.8)
     - GTMSessionFetcher/Core (< 4.0, >= 2.1)
     - RecaptchaInterop (~> 100.0)
-  - FirebaseCore (10.27.0):
+  - FirebaseCore (10.25.0):
     - FirebaseCoreInternal (~> 10.0)
     - GoogleUtilities/Environment (~> 7.12)
     - GoogleUtilities/Logger (~> 7.12)
@@ -108,12 +108,12 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   AppAuth: 501c04eda8a8d11f179dbe8637b7a91bb7e5d2fa
-  Firebase: 26b040b20866a55f55eb3611b9fcf3ae64816b86
-  firebase_auth: 17ce83d25a062b2a594e5dfce91a4ad36e3739d5
-  firebase_core: 5926464bbb028fef87d2443369b73ada2a8a3608
+  Firebase: 0312a2352584f782ea56f66d91606891d4607f06
+  firebase_auth: 5719ddc9f654b813405899480e84971bd8e61235
+  firebase_core: a626d00494efa398e7c54f25f1454a64c8abf197
   FirebaseAppCheckInterop: 0dd062c9926a76332ca5711dbed6f1a9ac540b54
-  FirebaseAuth: 77a012b7e08042bf44d0db835ca2e86e6ca7bbd3
-  FirebaseCore: a2b95ae4ce7c83ceecfbbbe3b6f1cddc7415a808
+  FirebaseAuth: c0f93dcc570c9da2bffb576969d793e95c344fbb
+  FirebaseCore: 7ec4d0484817f12c3373955bc87762d96842d483
   FirebaseCoreInternal: 4b297a2d56063dbea2c1d0d04222d44a8d058862
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   google_sign_in_ios: 07375bfbf2620bc93a602c0e27160d6afc6ead38

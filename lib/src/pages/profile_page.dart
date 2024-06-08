@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../components/text_field.dart';
-import '../services/auth_service.dart';
+import '../auth/auth_service.dart';
 
 class ProfilePage extends StatefulWidget {
   @override

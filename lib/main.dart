@@ -6,17 +6,19 @@ import 'package:provider/provider.dart';
 
 import 'firebase_options.dart';
 import 'src/pages/auth_page.dart';
-import 'src/pages/home_page.dart';
-import 'src/pages/login_page.dart';
 import 'src/theme/theme_provider.dart';
+import 'src/auth/auth_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(ChangeNotifierProvider(
-    create: (context) => ThemeProvider(),
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (context) => ThemeProvider()),
+      ChangeNotifierProvider(create: (context) => UserAuthProvider())
+    ],
     child: MyApp())
   );
 }
