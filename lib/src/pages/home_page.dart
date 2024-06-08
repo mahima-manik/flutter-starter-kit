@@ -1,13 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../auth/auth_provider.dart';
 import '../components/custom_drawer.dart';
 import '../models/product.dart';
 import '../theme/theme_provider.dart';
 import 'package:provider/provider.dart';
 
 import 'product_info.dart';
-import 'profile_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -18,26 +18,10 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool isDarkMode = false;
-  User? user;
-
-  @override
-  void initState() {
-    super.initState();
-    user = FirebaseAuth.instance.currentUser;
-    FirebaseAuth.instance.userChanges().listen((User? user) {
-      setState(() {
-        this.user = user;
-      });
-    });
-  }
-
-  String? getUserEmail() {
-    final user = FirebaseAuth.instance.currentUser;
-    return user?.email;
-  }
   
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserAuthProvider>(context, listen: true).user;
     return Scaffold(
       appBar: AppBar(
         actions: <Widget>[

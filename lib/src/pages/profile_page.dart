@@ -1,10 +1,11 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../auth/auth_provider.dart';
 import '../components/text_field.dart';
-import '../auth/auth_service.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -13,23 +14,6 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   final TextEditingController _displayNameController = TextEditingController();
-  User? user;
-  StreamSubscription? _userChangesSubscription;
-  
-  @override
-  void initState() {
-    super.initState();
-    user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      _displayNameController.text = user!.displayName ?? '';
-    }
-    _userChangesSubscription = FirebaseAuth.instance.userChanges().listen((User? user) {
-      setState(() {
-        this.user = user;
-      });
-    });
-  }
-
 
   void updateDisplayName() async {
     String displayName = _displayNameController.text;
@@ -42,8 +26,7 @@ class _ProfilePageState extends State<ProfilePage> {
       builder: (context) => const Center(child: CircularProgressIndicator()),
     );
     try {
-      await user!.updateDisplayName(displayName);
-      await user!.reload();
+      await context.read<UserAuthProvider>().updateDisplayName(displayName);
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Profile updated successfully')));
       Navigator.pop(context);
     } catch (e) {
@@ -57,8 +40,7 @@ class _ProfilePageState extends State<ProfilePage> {
       builder: (context) => const Center(child: CircularProgressIndicator()),
     );
     try {
-      await AuthService.updateUserPhoto(context, 'https://picsum.photos/300/300');
-      await user!.reload();
+      await context.read<UserAuthProvider>().updateUserPhoto(context, 'https://picsum.photos/300/300');
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Profile picture updated successfully')));
       Navigator.pop(context);
     } catch (e) {
@@ -68,6 +50,10 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserAuthProvider>(context).user;
+    if (user != null) {
+      _displayNameController.text = user.displayName ?? '';
+    }
     return Scaffold(
       appBar: AppBar(
         title: const Text('Edit Profile'),
@@ -79,12 +65,12 @@ class _ProfilePageState extends State<ProfilePage> {
             Stack(
               alignment: Alignment.bottomRight,
               children: [
-                user?.photoURL != null
+                context.read<UserAuthProvider>().user?.photoURL != null
                   ? CircleAvatar(
                       radius: 30,
                       child: ClipOval(
                         child: Image.network(
-                          user!.photoURL!,
+                          context.read<UserAuthProvider>().user!.photoURL!,
                           fit: BoxFit.contain,
                         ),
                       ),
@@ -108,12 +94,14 @@ class _ProfilePageState extends State<ProfilePage> {
               ],
             ),
             const SizedBox(height: 20),
-            FormTextField(
+            Consumer<UserAuthProvider>(
+              builder: (context, value, child) => FormTextField(
                 controller: _displayNameController,
                 label: 'Name',
                 hintText: 'Enter your full name',
                 obscureText: false,
                 keyboardType: TextInputType.name,
+              ),
             ),
             const SizedBox(height: 20),
             ElevatedButton(

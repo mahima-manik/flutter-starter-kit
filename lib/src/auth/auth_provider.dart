@@ -38,4 +38,18 @@ class UserAuthProvider extends ChangeNotifier {
     _user = null;
     notifyListeners();
   }
+
+  Future<void> updateDisplayName(String displayName) async {
+    await _authService.updateDisplayName(displayName);
+    await _user!.reload();
+    _user = _authService.currentUser;
+    notifyListeners();
+  }
+
+  Future<void> updateUserPhoto(BuildContext context, String photoURL) async {
+    await _authService.updateUserPhoto(context, photoURL);
+    await _user!.reload();
+    _user = _authService.currentUser;
+    notifyListeners();
+  }
 }

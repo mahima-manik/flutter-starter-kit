@@ -9,6 +9,7 @@ class AuthService {
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
   Stream<User?> get authUserChanges => _auth.authStateChanges();
+  User? get currentUser => _auth.currentUser;
 
   static void clearStackAndRedirectToPage(BuildContext context, Widget pageToRedirect) {
     Navigator.pushAndRemoveUntil(
@@ -46,7 +47,14 @@ class AuthService {
     return result.user;
   }
 
-  static Future<void> updateUserPhoto(BuildContext context, String photoURL) async {    
+  Future<void> updateDisplayName(String displayName) async {
+    final user = currentUser;
+    if (user != null) {
+      await user.updateDisplayName(displayName);
+    }
+  }
+
+  Future<void> updateUserPhoto(BuildContext context, String photoURL) async {    
       final user = FirebaseAuth.instance.currentUser;
       await user!.updatePhotoURL(photoURL);      
   }
