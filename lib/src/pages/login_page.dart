@@ -6,6 +6,7 @@ import '../auth/auth_provider.dart';
 import '../components/alert_dialog.dart';
 import '../components/text_field.dart';
 import 'auth_page.dart';
+import 'register_page.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -15,7 +16,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-  
+
   void clearStackAndRedirectToPage(Widget pageToRedirect) {
     Navigator.pushAndRemoveUntil(
       context,
@@ -104,6 +105,7 @@ class _LoginPageState extends State<LoginPage> {
       );
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -214,7 +216,7 @@ class _LoginPageState extends State<LoginPage> {
                 children: [
                   const Text('Not a user? '),
                   GestureDetector(
-                    onTap: () => {},
+                    onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterPage())),
                     child: const Text('Sign up', style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),),
                   ),
                 ],
