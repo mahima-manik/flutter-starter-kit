@@ -8,8 +8,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 class AuthService {
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  Stream<User?> get authUserChanges => _auth.authStateChanges();
-  User? get currentUser => _auth.currentUser;
+  Stream<User?> get authStateChanges => _auth.authStateChanges();
+  Stream<User?> get userChanges => _auth.userChanges();
 
   static void clearStackAndRedirectToPage(BuildContext context, Widget pageToRedirect) {
     Navigator.pushAndRemoveUntil(
@@ -48,7 +48,7 @@ class AuthService {
   }
 
   Future<void> updateDisplayName(String displayName) async {
-    final user = currentUser;
+    final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       await user.updateDisplayName(displayName);
     }

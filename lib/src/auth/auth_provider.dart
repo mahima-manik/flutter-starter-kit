@@ -8,7 +8,8 @@ class UserAuthProvider extends ChangeNotifier {
   final AuthService _authService = AuthService();
 
   UserAuthProvider() {
-    _authService.authUserChanges.listen(_onAuthUserChanged);
+    _authService.authStateChanges.listen(_onAuthUserChanged);
+    _authService.userChanges.listen(_onAuthUserChanged);
   }
 
   void _onAuthUserChanged(User? user) {
@@ -42,14 +43,12 @@ class UserAuthProvider extends ChangeNotifier {
   Future<void> updateDisplayName(String displayName) async {
     await _authService.updateDisplayName(displayName);
     await _user!.reload();
-    _user = _authService.currentUser;
     notifyListeners();
   }
 
   Future<void> updateUserPhoto(BuildContext context, String photoURL) async {
     await _authService.updateUserPhoto(context, photoURL);
     await _user!.reload();
-    _user = _authService.currentUser;
     notifyListeners();
   }
 }
