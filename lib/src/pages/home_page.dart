@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../auth/auth_provider.dart';
@@ -16,17 +15,15 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
-  bool isDarkMode = false;
-  
+class _HomePageState extends State<HomePage> {  
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserAuthProvider>(context, listen: true).user;
+    final user = context.watch<UserAuthProvider>().user;
     return Scaffold(
       appBar: AppBar(
         actions: <Widget>[
           IconButton(icon: const Icon(Icons.brightness_4), onPressed: () {
-            Provider.of<ThemeProvider>(context, listen: false).toggleTheme();
+            context.read<ThemeProvider>().toggleTheme();
           }),
         ],
       ),
