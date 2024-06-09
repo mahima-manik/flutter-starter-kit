@@ -62,4 +62,22 @@ class AuthService {
       final photoURL = await _storageService.uploadUserDisplayPhoto(user!.uid, photoPath);
       await user.updatePhotoURL(photoURL);
   }
+
+  Future<void> updatePassword(BuildContext context, String currentPassword, String newPassword) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      try {
+        // Re-authenticate the user with the current password
+        AuthCredential credential = EmailAuthProvider.credential(
+          email: user.email!,
+          password: currentPassword,
+        );
+        await user.reauthenticateWithCredential(credential);
+        // Update the password
+        await user.updatePassword(newPassword);
+      } on FirebaseAuthException catch (e) {
+        throw Exception('Error updating password: ${e.message}');
+      }
+    }
+  }
 }

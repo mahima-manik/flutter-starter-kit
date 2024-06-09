@@ -51,4 +51,9 @@ class UserAuthProvider extends ChangeNotifier {
     await _user!.reload();
     notifyListeners();
   }
+
+  Future<void> updatePassword(BuildContext context, String currentPassword, String newPassword) async {
+    await _authService.updatePassword(context, currentPassword, newPassword);
+    notifyListeners();
+  }
 }

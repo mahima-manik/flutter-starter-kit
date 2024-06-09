@@ -12,6 +12,46 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   final TextEditingController _displayNameController = TextEditingController();
+  final TextEditingController _currentPasswordController = TextEditingController();
+  final TextEditingController _newPasswordController = TextEditingController();
+
+
+  Future<void> updateProfileFields() async {
+    final user = context.read<UserAuthProvider>().user;
+    // Check if the user has changed
+    if (user?.displayName != _displayNameController.text) {
+      updateDisplayName();
+    }
+
+    // Check if the user has changed the password
+    if (_newPasswordController.text.isNotEmpty && _currentPasswordController.text.isNotEmpty) {
+      updatePassword();
+    }
+  }
+
+  void updatePassword() async {
+    String currentPassword = _currentPasswordController.text;
+    String newPassword = _newPasswordController.text;
+    if (currentPassword.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Current password is required')));
+      return;
+    }
+    if (newPassword.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('New password is required')));
+      return;
+    }
+    showDialog(
+      context: context,
+      builder: (context) => const Center(child: CircularProgressIndicator()),
+    );
+    try {
+      await Provider.of<UserAuthProvider>(context, listen: false).updatePassword(context, currentPassword, newPassword);
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Password updated successfully')));
+      Navigator.pop(context);
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to update password: $e')));
+    }
+  }
 
   void updateDisplayName() async {
     String displayName = _displayNameController.text;
@@ -107,8 +147,26 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ),
             const SizedBox(height: 20),
+            // Field for existing password
+            FormTextField(
+              controller: _currentPasswordController,
+              label: 'Current Password',
+              hintText: 'Enter your current password',
+              obscureText: true,
+              keyboardType: TextInputType.text,
+            ),
+            // Field for new password
+            const SizedBox(height: 20),
+            FormTextField(
+              controller: _newPasswordController,
+              label: 'New Password',
+              hintText: 'Enter your new password',
+              obscureText: true,
+              keyboardType: TextInputType.text,
+            ),
+            const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: updateDisplayName,
+              onPressed: updateProfileFields,
               child: const Text('Update'),
             ),
             const SizedBox(height: 20),
