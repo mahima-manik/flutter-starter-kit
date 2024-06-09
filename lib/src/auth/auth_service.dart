@@ -4,10 +4,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import '../services/storage_service.dart';
+
 
 class AuthService {
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final StorageService _storageService = StorageService();
   Stream<User?> get authStateChanges => _auth.authStateChanges();
   Stream<User?> get userChanges => _auth.userChanges();
 
@@ -54,9 +57,9 @@ class AuthService {
     }
   }
 
-  Future<void> updateUserPhoto(BuildContext context, String photoURL) async {    
+  Future<void> updateUserPhoto(BuildContext context, String photoPath) async {    
       final user = FirebaseAuth.instance.currentUser;
-      await user!.updatePhotoURL(photoURL);      
+      final photoURL = await _storageService.uploadUserDisplayPhoto(user!.uid, photoPath);
+      await user.updatePhotoURL(photoURL);
   }
-
 }

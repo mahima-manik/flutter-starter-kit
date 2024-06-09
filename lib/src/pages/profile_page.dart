@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../auth/auth_provider.dart';
 import '../components/text_field.dart';
@@ -32,16 +33,24 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   void updateDisplayPhoto() async {
-    showDialog(
-      context: context,
-      builder: (context) => const Center(child: CircularProgressIndicator()),
-    );
-    try {
-      await context.read<UserAuthProvider>().updateUserPhoto(context, 'https://picsum.photos/300/300');
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Profile picture updated successfully')));
-      Navigator.pop(context);
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to update profile: $e')));
+    final ImagePicker _picker = ImagePicker();
+    // Open the image picker
+    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+
+    if (image != null) {
+      showDialog(
+        context: context,
+        builder: (context) => const Center(child: CircularProgressIndicator()),
+      );
+      try {
+        // Use the selected image's path
+        await context.read<UserAuthProvider>().updateUserPhoto(context, image.path);
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Profile picture updated successfully')));
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to update profile: $e')));
+      } finally {
+        Navigator.pop(context); // Ensure the progress dialog is closed
+      }
     }
   }
 
@@ -62,21 +71,18 @@ class _ProfilePageState extends State<ProfilePage> {
             Stack(
               alignment: Alignment.bottomRight,
               children: [
-                context.read<UserAuthProvider>().user?.photoURL != null
-                  ? CircleAvatar(
-                      radius: 30,
-                      child: ClipOval(
-                        child: Image.network(
+                CircleAvatar(
+                  radius: 30,
+                  child: ClipOval(
+                    child: context.read<UserAuthProvider>().user?.photoURL != null
+                      ? Image.network(
                           context.read<UserAuthProvider>().user!.photoURL!,
                           fit: BoxFit.contain,
-                        ),
-                      ),
-                    )
-                  : CircleAvatar(
-                    radius: 30,
-                    backgroundColor: Theme.of(context).colorScheme.secondary,
-                    child: Icon(Icons.person, size: 30, color: Theme.of(context).colorScheme.onSecondary),
+                          errorBuilder: (context, error, stackTrace) => Icon(Icons.person, size: 30, color: Theme.of(context).colorScheme.onSecondary),
+                        )
+                      : Icon(Icons.person, size: 30, color: Theme.of(context).colorScheme.onSecondary),
                   ),
+                ),
                 GestureDetector(
                   onTap: updateDisplayPhoto,
                   child: Container(

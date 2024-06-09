@@ -17,7 +17,10 @@ dependencies:
   provider:
   firebase_core:
   firebase_auth:
+  firebase_storage:
+  image_picker:
   google_sign_in:
+  intl:
 
 dev_dependencies:
   flutter_test:

@@ -19,6 +19,10 @@
 		</dict>
 	</array>
 	<!-- Google Sign-in Section end -->
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Your permission message for accessing the photo library</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Your permission message for accessing the camera</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>

@@ -26,6 +26,7 @@ class CustomDrawer extends StatelessWidget {
                               child: Image.network(
                                 user!.photoURL!,
                                 fit: BoxFit.contain,
+                                errorBuilder: (context, error, stackTrace) => Icon(Icons.person, size: 30, color: Theme.of(context).colorScheme.onSecondary),
                               ),
                             ),
                           )
