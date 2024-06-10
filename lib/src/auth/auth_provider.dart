@@ -56,4 +56,10 @@ class UserAuthProvider extends ChangeNotifier {
     await _authService.updatePassword(context, currentPassword, newPassword);
     notifyListeners();
   }
+
+  Future<void> deleteUserAndData() async {
+    await _authService.deleteUserAndData();
+    _user = null;
+    notifyListeners();
+  }
 }

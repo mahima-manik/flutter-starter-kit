@@ -14,37 +14,37 @@ class StorageService {
 
   Future<String?> uploadUserDisplayPhoto(String userId, String photoPath) async {
     try {
-      // Load the file data from the provided photoPath
       final Uint8List file = await loadAsset(photoPath);
-
       String extension = photoPath.split('.').last;
       String formattedDate = DateFormat('yyyyMMdd_HHmmss').format(DateTime.now());
-
-      // Create a file name with the current timestamp and original file extension
-      String fileName = 'user_uploads/profile/$formattedDate.$extension';
+      String fileName = 'user_uploads/profile/$userId/$formattedDate.$extension';
 
       final Reference photoRef = _storage.ref().child(fileName);
-      // Upload the file data to Firebase Storage
       final uploadTask = photoRef.putData(file);
 
-      print('Uploading user display photo to Firebase Storage');
-      // Wait for the upload to complete
-      final snapshot = await uploadTask.whenComplete(() {
-        print('User display photo uploaded to Firebase Storage');
-      }).onError((error, stackTrace) {
-        // ignore: avoid_print
-        print('Failed to upload display photo: $error');
+      final snapshot = await uploadTask.whenComplete(() {}).onError((error, stackTrace) {
         return Future.error(error as Object);
       });
 
-      // Check if snapshot is not null before getting the URL
       final photoUrl = await snapshot.ref.getDownloadURL();
-      print('User display photo URL: $photoUrl');
       return photoUrl;
     } catch (e) {
-      print('Failed to upload display photo: $e');
       return null;
     }
   }
-}
 
+  Future<void> deleteUserPhotos(String userId) async {
+    final userPhotosRef = _storage.ref().child('user_uploads/profile/$userId/');
+    
+    // Check if there are any photos to delete
+    final ListResult result = await userPhotosRef.listAll();
+    if (result.items.isEmpty) {
+      return;
+    }
+
+    // Iterate over the files and delete each one
+    for (var photoRef in result.items) {
+      await photoRef.delete();
+    }
+  }
+}

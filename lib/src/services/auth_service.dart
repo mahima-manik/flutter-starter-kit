@@ -80,4 +80,27 @@ class AuthService {
       }
     }
   }
+
+  Future<void> deleteUserAndData() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      try {
+        // Delete user's data from Firestore or any other services before deleting the user account
+        // Example: await _firestoreService.deleteUserData(user.uid);
+
+        // Delete user's photos from storage
+        await _storageService.deleteUserPhotos(user.uid);
+
+        // Finally, delete the user
+        await user.delete();
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'requires-recent-login') {
+          throw Exception('This operation is sensitive and requires recent authentication.'
+                          'Log in again before retrying this request.');
+        } else {
+          throw Exception('Failed to delete user: ${e.message}');
+        }
+      }
+    }
+  }
 }

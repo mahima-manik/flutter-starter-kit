@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -45,7 +46,7 @@ class _ProfilePageState extends State<ProfilePage> {
       builder: (context) => const Center(child: CircularProgressIndicator()),
     );
     try {
-      await Provider.of<UserAuthProvider>(context, listen: false).updatePassword(context, currentPassword, newPassword);
+      await context.read<UserAuthProvider>().updatePassword(context, currentPassword, newPassword);
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Password updated successfully')));
       Navigator.pop(context);
     } catch (e) {
@@ -94,6 +95,45 @@ class _ProfilePageState extends State<ProfilePage> {
     }
   }
 
+  void deleteUser() async {
+    final bool confirmDelete = await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Confirm action', style: TextStyle(color: Theme.of(context).colorScheme.onSecondary)),
+          content: Text('Are you sure you want to delete your account? This action cannot be undone.', style: TextStyle(color: Theme.of(context).colorScheme.onSecondary)),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: Text('Cancel', style: TextStyle(color: Theme.of(context).colorScheme.onSecondary)),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(true),
+              child: const Text('Delete', style: TextStyle(color: Colors.red)),
+            ),
+          ],
+        );
+      },
+    ) ?? false;
+
+    if (confirmDelete) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return const Center(child: CircularProgressIndicator());
+        },
+      );
+      try {
+        await context.read<UserAuthProvider>().deleteUserAndData();
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Account deleted successfully')));
+        Navigator.of(context).popUntil((route) => route.isFirst);
+      } catch (e) {
+        Navigator.pop(context);
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to delete account: $e')));
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserAuthProvider>(context).user;
@@ -112,12 +152,14 @@ class _ProfilePageState extends State<ProfilePage> {
               alignment: Alignment.bottomRight,
               children: [
                 CircleAvatar(
-                  radius: 30,
+                  radius: 60,
                   child: ClipOval(
                     child: context.read<UserAuthProvider>().user?.photoURL != null
                       ? Image.network(
                           context.read<UserAuthProvider>().user!.photoURL!,
-                          fit: BoxFit.contain,
+                          fit: BoxFit.cover,
+                          width: 120,
+                          height: 120,
                           errorBuilder: (context, error, stackTrace) => Icon(Icons.person, size: 30, color: Theme.of(context).colorScheme.onSecondary),
                         )
                       : Icon(Icons.person, size: 30, color: Theme.of(context).colorScheme.onSecondary),
@@ -169,7 +211,20 @@ class _ProfilePageState extends State<ProfilePage> {
               onPressed: updateProfileFields,
               child: const Text('Update'),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 30),
+            Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text('Joined on: ${DateFormat('dd MMMM yyyy').format(user?.metadata.creationTime?.toLocal() ?? DateTime.now())}'),
+                  GestureDetector(
+                    onTap: deleteUser,
+                    child: Text(
+                      'Delete', 
+                      style: TextStyle(color: Colors.red),
+                    ),
+                  ),
+                ],
+              ),
           ],
         ),
       ),

@@ -25,7 +25,9 @@ class CustomDrawer extends StatelessWidget {
                             child: ClipOval(
                               child: Image.network(
                                 user!.photoURL!,
-                                fit: BoxFit.contain,
+                                fit: BoxFit.cover,
+                                width: 60,
+                                height: 60,
                                 errorBuilder: (context, error, stackTrace) => Icon(Icons.person, size: 30, color: Theme.of(context).colorScheme.onSecondary),
                               ),
                             ),
