@@ -18,21 +18,21 @@ class CustomDrawer extends StatelessWidget {
                 Expanded(
                   child: user?.photoURL != null
                     ? CircleAvatar(
-                        radius: 30,
+                        radius: 40,
                         child: ClipOval(
                           child: Image.network(
                             user!.photoURL!,
                             fit: BoxFit.cover,
-                            width: 60,
-                            height: 60,
+                            width: 80,
+                            height: 80,
                             errorBuilder: (context, error, stackTrace) => Icon(Icons.person, size: 30, color: Theme.of(context).colorScheme.onSecondary),
                           ),
                         ),
                       )
                     : CircleAvatar(
-                        radius: 30,
+                        radius: 40,
                         backgroundColor: Theme.of(context).colorScheme.secondary,
-                        child: Icon(Icons.person, size: 30, color: Theme.of(context).colorScheme.onSecondary),
+                        child: Icon(Icons.person, size: 40, color: Theme.of(context).colorScheme.onSecondary),
                       ),
               ),
             ],

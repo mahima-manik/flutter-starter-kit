@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../auth/auth_provider.dart';
 import '../components/custom_drawer.dart';
+import '../components/product_tile.dart';
 import '../models/product.dart';
 import '../theme/theme_provider.dart';
-import 'package:provider/provider.dart';
-
-import 'product_info.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -18,42 +17,42 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {  
   @override
   Widget build(BuildContext context) {
-    final user = context.watch<UserAuthProvider>().user;
     return Scaffold(
       appBar: AppBar(
         actions: <Widget>[
           IconButton(icon: const Icon(Icons.brightness_4), onPressed: () {
             context.read<ThemeProvider>().toggleTheme();
           }),
+          IconButton(icon: const Icon(Icons.shopping_cart), onPressed: () {
+            
+          }),
         ],
       ),
       drawer: const CustomDrawer(),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: ListView(
           children: [
-            if (user?.displayName != null) Text('Welcome, ${user?.displayName}'),
-            if (user?.email != null) Text('Signed in as ${user?.email}'),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ProductInfoPage(
-                    product: Product(
-                      name: 'Dettol Skincare Handwash - Moisturizing and Hydrating', 
-                      description: 'Dettol Skincare Handwash is our Signature product and is bestseller',
-                      price: 10,
-                      images: ['https://picsum.photos/200/300', 'https://picsum.photos/300', 'https://picsum.photos/400/300'],
-                    ),
-                  )),
-                );
-              },
-              child: const Text('Go to Product Page'),
-            ),
-        ],
+            ProductTile(product: Product(
+              name: 'Dettol Skincare Handwash - Moisturizing and Hydrating', 
+              description: 'Dettol Skincare Handwash is our Signature product and is bestseller',
+              price: 10,
+              images: ['https://picsum.photos/200/300', 'https://picsum.photos/300', 'https://picsum.photos/400/300'],
+            )),
+            ProductTile(product: Product(
+              name: 'Dettol Skincare Handwash - Moisturizing and Hydrating', 
+              description: 'Dettol Skincare Handwash is our Signature product and is bestseller',
+              price: 10,
+              images: ['https://picsum.photos/200/300', 'https://picsum.photos/300', 'https://picsum.photos/400/300'],
+            )),
+            ProductTile(product: Product(
+              name: 'Dettol Skincare Handwash - Moisturizing and Hydrating', 
+              description: 'Dettol Skincare Handwash is our Signature product and is bestseller',
+              price: 10,
+              images: ['https://picsum.photos/200/300', 'https://picsum.photos/300', 'https://picsum.photos/400/300'],
+            )),
+          ],
+        ),
       ),
-      )
   );
   }
 }

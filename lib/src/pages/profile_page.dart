@@ -212,21 +212,24 @@ class _ProfilePageState extends State<ProfilePage> {
               child: const Text('Update'),
             ),
             const SizedBox(height: 30),
-            Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+            Padding(
+              padding: const EdgeInsets.all(25.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text('Joined on: ${DateFormat('dd MMMM yyyy').format(user?.metadata.creationTime?.toLocal() ?? DateTime.now())}'),
                   GestureDetector(
                     onTap: deleteUser,
-                    child: Text(
+                    child: const Text(
                       'Delete', 
                       style: TextStyle(color: Colors.red),
                     ),
                   ),
                 ],
               ),
-          ],
-        ),
+            ),
+            ],
+          ),
       ),
     );
   }
