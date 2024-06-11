@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_starter_kit/src/models/product.dart';
 
+import '../models/product.dart';
 import '../pages/product_info.dart';
 
 class ProductTile extends StatelessWidget {
@@ -11,8 +11,6 @@ class ProductTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
-
     return GestureDetector(
       onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ProductInfoPage(product: product))),
       child: Container(
@@ -29,58 +27,82 @@ class ProductTile extends StatelessWidget {
   
   Widget _buildListContent(BuildContext context) {
     return Row(
-          children: <Widget>[
-            ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: Image.network(
-                product.images.first,
-                width: 100,
-                height: 100,
-                fit: BoxFit.cover,
+      children: <Widget>[
+        ClipRRect(
+          borderRadius: BorderRadius.circular(8),
+          child: Image.network(
+            product.images.first,
+            width: 100,
+            height: 100,
+            fit: BoxFit.cover,
+          ),
+        ),
+        const SizedBox(width: 10),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                product.name,
+                style: Theme.of(context).textTheme.titleLarge,
+                overflow: TextOverflow.ellipsis,
               ),
-            ),
-            const SizedBox(width: 10),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
                   Text(
-                    product.name,
-                    style: Theme.of(context).textTheme.titleLarge,
-                    overflow: TextOverflow.ellipsis,
+                    '\$${product.price.toStringAsFixed(2)}',
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).colorScheme.onSurface),
                   ),
-                  const SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        '\$${product.price.toStringAsFixed(2)}',
-                        style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).colorScheme.onSurface),
-                      ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(Icons.add_shopping_cart, color: Theme.of(context).colorScheme.primary),
-                        // label: Text('Add to Cart', style: TextStyle(color: Theme.of(context).colorScheme.primary)),
-                      ),
-                    ],
+                  IconButton(
+                    onPressed: () {},
+                    icon: Icon(Icons.add_shopping_cart, color: Theme.of(context).colorScheme.primary),
+                    // label: Text('Add to Cart', style: TextStyle(color: Theme.of(context).colorScheme.primary)),
                   ),
                 ],
               ),
-            ),
+            ],
+          ),
+        ),
     ],
   );
 }
 
   Widget _buildGridContent(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         ClipRRect(
           borderRadius: BorderRadius.circular(8),
-          child: Image.network(product.images.first, width: 100, height: 100, fit: BoxFit.contain),
+          child: Image.network(
+            product.images.first,
+            width: double.infinity,
+            height: MediaQuery.of(context).size.width / 2,
+            fit: BoxFit.cover,
+          ),
+        ),
+        const SizedBox(height: 10),
+        Text(
+          product.name,
+          style: Theme.of(context).textTheme.titleLarge,
+          overflow: TextOverflow.ellipsis,
+        ),
+        const SizedBox(height: 5),
+        Text(
+          '\$${product.price.toStringAsFixed(2)}',
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).colorScheme.onSurface),
+        ),
+        const SizedBox(height: 5),
+        Align(
+          alignment: Alignment.centerRight,
+          child: IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.add_shopping_cart, color: Theme.of(context).colorScheme.primary),
+          ),
         ),
       ],
     );
   }
 }
-
