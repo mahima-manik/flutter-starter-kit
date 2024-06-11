@@ -5,8 +5,9 @@ import '../pages/product_info.dart';
 
 class ProductTile extends StatelessWidget {
   final Product product;
+  final bool isGridView;
 
-  const ProductTile({super.key, required this.product});
+  const ProductTile({super.key, required this.product, this.isGridView = false});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,13 @@ class ProductTile extends StatelessWidget {
           color: Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(8),
         ),
-        child: Row(
+        child: isGridView ? _buildGridContent(context) : _buildListContent(context),
+      ),
+    );
+  }
+  
+  Widget _buildListContent(BuildContext context) {
+    return Row(
           children: <Widget>[
             ClipRRect(
               borderRadius: BorderRadius.circular(8),
@@ -40,20 +47,40 @@ class ProductTile extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     product.name,
-                    style: theme.textTheme.titleLarge,
+                    style: Theme.of(context).textTheme.titleLarge,
                     overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(height: 10),
-                  Text(
-                    '\$${product.price.toStringAsFixed(2)}',
-                    style: theme.textTheme.titleMedium?.copyWith(color: Theme.of(context).colorScheme.onSurface),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        '\$${product.price.toStringAsFixed(2)}',
+                        style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).colorScheme.onSurface),
+                      ),
+                      IconButton(
+                        onPressed: () {},
+                        icon: Icon(Icons.add_shopping_cart, color: Theme.of(context).colorScheme.primary),
+                        // label: Text('Add to Cart', style: TextStyle(color: Theme.of(context).colorScheme.primary)),
+                      ),
+                    ],
                   ),
                 ],
               ),
             ),
-          ],
+    ],
+  );
+}
+
+  Widget _buildGridContent(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        ClipRRect(
+          borderRadius: BorderRadius.circular(8),
+          child: Image.network(product.images.first, width: 100, height: 100, fit: BoxFit.contain),
         ),
-      ),
+      ],
     );
   }
 }
+

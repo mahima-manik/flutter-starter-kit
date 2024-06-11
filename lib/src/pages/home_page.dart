@@ -14,7 +14,9 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {  
+class _HomePageState extends State<HomePage> {
+  bool _isListView = true;
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,38 +26,47 @@ class _HomePageState extends State<HomePage> {
             context.read<ThemeProvider>().toggleTheme();
           }),
           IconButton(icon: const Icon(Icons.shopping_cart), onPressed: () {
-            
+          }),
+          IconButton(icon: const Icon(Icons.view_list), onPressed: () {
+            setState(() {
+              _isListView = !_isListView;
+            });
           }),
         ],
       ),
       drawer: const CustomDrawer(),
       body: Center(
-        child: ListView(
-          padding: const EdgeInsets.all(20),
-          children: [
-            ProductTile(product: Product(
-              name: 'Dettol Skincare Handwash - Moisturizing and Hydrating', 
-              description: 'Dettol Skincare Handwash is our Signature product and is bestseller',
-              price: 10,
-              images: ['https://picsum.photos/200/300', 'https://picsum.photos/300', 'https://picsum.photos/400/300'],
-            )),
-            const SizedBox(height: 10),
-            ProductTile(product: Product(
-              name: 'Dettol Skincare Handwash - Moisturizing and Hydrating', 
-              description: 'Dettol Skincare Handwash is our Signature product and is bestseller',
-              price: 10,
-              images: ['https://picsum.photos/300', 'https://picsum.photos/300', 'https://picsum.photos/400/300'],
-            )),
-            const SizedBox(height: 10),
-            ProductTile(product: Product(
-              name: 'Dettol Skincare Handwash - Moisturizing and Hydrating', 
-              description: 'Dettol Skincare Handwash is our Signature product and is bestseller',
-              price: 10,
-              images: ['https://picsum.photos/400', 'https://picsum.photos/300', 'https://picsum.photos/400/300'],
-            )),
-          ],
-        ),
+        child: _isListView ? _buildListView() : _buildGridView(),
       ),
   );
+  }
+  Widget _buildListView() {
+    return ListView(
+      children: <Widget>[
+        ProductTile(product: Product(
+          name: 'Dettol Skincare Handwash - Moisturizing and Hydrating', 
+          description: 'Dettol Skincare Handwash is our Signature product and is bestseller',
+          price: 10,
+          images: ['https://picsum.photos/200/300', 'https://picsum.photos/300', 'https://picsum.photos/400/300'],
+        )),
+      ],
+    );
+  }
+
+  Widget _buildGridView() {
+    return GridView.count(
+      crossAxisCount: 2,
+      children: <Widget>[
+        ProductTile(
+          product: Product(
+            name: 'Dettol Skincare Handwash - Moisturizing and Hydrating', 
+            description: 'Dettol Skincare Handwash is our Signature product and is bestseller',
+            price: 10,
+            images: ['https://picsum.photos/200/300', 'https://picsum.photos/300', 'https://picsum.photos/400/300'],
+          ),
+          isGridView: true,
+        ),
+      ],
+    );
   }
 }
