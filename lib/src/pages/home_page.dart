@@ -56,6 +56,8 @@ class _HomePageState extends State<HomePage> {
   Widget _buildGridView() {
     return GridView.count(
       crossAxisCount: 2,
+      padding: const EdgeInsets.all(10),
+      crossAxisSpacing: 10,
       children: <Widget>[
         ProductTile(
           product: Product(
@@ -63,6 +65,24 @@ class _HomePageState extends State<HomePage> {
             description: 'Dettol Skincare Handwash is our Signature product and is bestseller',
             price: 10,
             images: ['https://picsum.photos/200/300', 'https://picsum.photos/300', 'https://picsum.photos/400/300'],
+          ),
+          isGridView: true,
+        ),
+        ProductTile(
+          product: Product(
+            name: 'Dettol Skincare Handwash - Moisturizing and Hydrating', 
+            description: 'Dettol Skincare Handwash is our Signature product and is bestseller',
+            price: 10,
+            images: ['https://picsum.photos/300', 'https://picsum.photos/300', 'https://picsum.photos/400/300'],
+          ),
+          isGridView: true,
+        ),
+        ProductTile(
+          product: Product(
+            name: 'Dettol Skincare Handwash - Moisturizing and Hydrating', 
+            description: 'Dettol Skincare Handwash is our Signature product and is bestseller',
+            price: 10,
+            images: ['https://picsum.photos/400', 'https://picsum.photos/300', 'https://picsum.photos/400/300'],
           ),
           isGridView: true,
         ),

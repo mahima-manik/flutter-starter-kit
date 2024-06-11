@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../models/product.dart';
 import '../pages/product_info.dart';
 
@@ -20,11 +19,13 @@ class ProductTile extends StatelessWidget {
           color: Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(8),
         ),
-        child: isGridView ? _buildGridContent(context) : _buildListContent(context),
+        child: IntrinsicHeight(
+          child: isGridView ? _buildGridContent(context) : _buildListContent(context),
+        ),
       ),
     );
   }
-  
+
   Widget _buildListContent(BuildContext context) {
     return Row(
       children: <Widget>[
@@ -72,34 +73,42 @@ class ProductTile extends StatelessWidget {
 
   Widget _buildGridContent(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center, // Changed to center the content
       children: <Widget>[
-        ClipRRect(
-          borderRadius: BorderRadius.circular(8),
-          child: Image.network(
-            product.images.first,
-            width: double.infinity,
-            height: MediaQuery.of(context).size.width / 2,
-            fit: BoxFit.cover,
+        Expanded(
+          child: AspectRatio(
+            aspectRatio: 1,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: Image.network(
+                product.images.first,
+                fit: BoxFit.cover,
+              ),
+            ),
           ),
         ),
-        const SizedBox(height: 10),
-        Text(
-          product.name,
-          style: Theme.of(context).textTheme.titleLarge,
-          overflow: TextOverflow.ellipsis,
-        ),
-        const SizedBox(height: 5),
-        Text(
-          '\$${product.price.toStringAsFixed(2)}',
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).colorScheme.onSurface),
-        ),
-        const SizedBox(height: 5),
-        Align(
-          alignment: Alignment.centerRight,
-          child: IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.add_shopping_cart, color: Theme.of(context).colorScheme.primary),
+        Flexible(
+          child: Column(
+            children: [
+              Text(
+                product.name,
+                style: Theme.of(context).textTheme.titleMedium,
+                overflow: TextOverflow.ellipsis,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    '\$${product.price.toStringAsFixed(2)}',
+                    style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Theme.of(context).colorScheme.onSurface),
+                  ),
+                  IconButton(
+                    onPressed: () {},
+                    icon: Icon(Icons.add_shopping_cart, color: Theme.of(context).colorScheme.primary),
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ],
