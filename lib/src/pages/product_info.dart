@@ -9,11 +9,16 @@ class ProductInfoPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    int quantity = 0;
     return Scaffold(
       appBar: AppBar(
         actions: [
           IconButton(
             icon: const Icon(Icons.search),
+            onPressed: () => {},
+          ),
+          IconButton(
+            icon: const Icon(Icons.shopping_cart),
             onPressed: () => {},
           ),
         ],
@@ -40,12 +45,51 @@ class ProductInfoPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 10),
-                  Text(
-                      '\$ ${product.price}',
-                      style: const TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        '\$ ${product.price}',
+                        style: const TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
+                      StatefulBuilder(
+                        builder: (BuildContext context, StateSetter setState) {
+                          return quantity == 0
+                              ? ElevatedButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      quantity = 1;
+                                    });
+                                  },
+                                  child: const Text('Add'),
+                                )
+                              : Row(
+                                  children: [
+                                    IconButton(
+                                      icon: const Icon(Icons.remove),
+                                      onPressed: () {
+                                        setState(() {
+                                          if (quantity > 0) quantity--;
+                                        });
+                                      },
+                                    ),
+                                    Text('$quantity'),
+                                    IconButton(
+                                      icon: const Icon(Icons.add),
+                                      onPressed: () {
+                                        setState(() {
+                                          quantity++;
+                                        });
+                                      },
+                                    ),
+                                  ],
+                                );
+                        },
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 10),
                   ExpansionTile(
