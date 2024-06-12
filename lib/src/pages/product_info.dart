@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../components/image_gallery.dart';
+import '../components/star_rating.dart';
 import '../models/product.dart';
 
 class ProductInfoPage extends StatelessWidget {
@@ -37,6 +38,8 @@ class ProductInfoPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  StarRating(rating: 2.0),
+                  const SizedBox(height: 10),
                   Text(
                     product.name,
                     style: TextStyle(
