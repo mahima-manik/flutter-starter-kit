@@ -21,6 +21,7 @@ dependencies:
   image_picker:
   google_sign_in:
   intl:
+  cloud_firestore: ^5.0.1
 
 dev_dependencies:
   flutter_test:
