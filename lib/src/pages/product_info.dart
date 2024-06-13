@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../components/image_gallery.dart';
+import '../components/quantity_selector.dart';
 import '../components/star_rating.dart';
 import '../models/product.dart';
 
@@ -38,7 +39,7 @@ class ProductInfoPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  StarRating(rating: 2.0),
+                  StarRating(rating: product.rating),
                   const SizedBox(height: 10),
                   Text(
                     product.name,
@@ -58,38 +59,10 @@ class ProductInfoPage extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      StatefulBuilder(
-                        builder: (BuildContext context, StateSetter setState) {
-                          return quantity == 0
-                              ? ElevatedButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      quantity = 1;
-                                    });
-                                  },
-                                  child: const Text('Add'),
-                                )
-                              : Row(
-                                  children: [
-                                    IconButton(
-                                      icon: const Icon(Icons.remove),
-                                      onPressed: () {
-                                        setState(() {
-                                          if (quantity > 0) quantity--;
-                                        });
-                                      },
-                                    ),
-                                    Text('$quantity'),
-                                    IconButton(
-                                      icon: const Icon(Icons.add),
-                                      onPressed: () {
-                                        setState(() {
-                                          quantity++;
-                                        });
-                                      },
-                                    ),
-                                  ],
-                                );
+                      QuantitySelector(
+                        initialQuantity: quantity,
+                        onQuantityChanged: (int newQuantity) {
+                          quantity = newQuantity;
                         },
                       ),
                     ],
