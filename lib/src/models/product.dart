@@ -1,4 +1,3 @@
-// create a model to store product details
 class Product {
   final String name;
   final String description;

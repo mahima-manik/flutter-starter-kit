@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../auth/auth_provider.dart';
 import '../components/custom_drawer.dart';
 import '../components/product_tile.dart';
 import '../models/product.dart';
+import '../services/firestore_service.dart';
 import '../theme/theme_provider.dart';
 
 class HomePage extends StatefulWidget {
@@ -35,58 +35,47 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       drawer: const CustomDrawer(),
-      body: Center(
-        child: _isListView ? _buildListView() : _buildGridView(),
+      body: StreamBuilder<List<Product>>(
+        stream: FirestoreService().fetchAllProducts(),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          }
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          final products = snapshot.data ?? [];
+          return Center(
+            child: _isListView ? _buildListView(products) : _buildGridView(products),
+          );
+        },
       ),
-  );
+    );
   }
-  Widget _buildListView() {
-    return ListView(
-      children: <Widget>[
-        ProductTile(product: Product(
-          name: 'Dettol Skincare Handwash - Moisturizing and Hydrating', 
-          description: 'Dettol Skincare Handwash is our Signature product and is bestseller',
-          price: 10,
-          images: ['https://picsum.photos/200/300', 'https://picsum.photos/300', 'https://picsum.photos/400/300'],
-        )),
-      ],
+  
+  Widget _buildListView(List<Product> products) {
+    return ListView.builder(
+      itemCount: products.length,
+      itemBuilder: (context, index) {
+        return ProductTile(product: products[index]);
+      },
     );
   }
 
-  Widget _buildGridView() {
-    return GridView.count(
-      crossAxisCount: 2,
-      padding: const EdgeInsets.all(10),
-      crossAxisSpacing: 10,
-      children: <Widget>[
-        ProductTile(
-          product: Product(
-            name: 'Dettol Skincare Handwash - Moisturizing and Hydrating', 
-            description: 'Dettol Skincare Handwash is our Signature product and is bestseller',
-            price: 10,
-            images: ['https://picsum.photos/200/300', 'https://picsum.photos/300', 'https://picsum.photos/400/300'],
-          ),
+  Widget _buildGridView(List<Product> products) {
+    return GridView.builder(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        crossAxisSpacing: 10,
+        mainAxisSpacing: 10,
+      ),
+      itemCount: products.length,
+      itemBuilder: (context, index) {
+        return ProductTile(
+          product: products[index],
           isGridView: true,
-        ),
-        ProductTile(
-          product: Product(
-            name: 'Dettol Skincare Handwash - Moisturizing and Hydrating', 
-            description: 'Dettol Skincare Handwash is our Signature product and is bestseller',
-            price: 10,
-            images: ['https://picsum.photos/300', 'https://picsum.photos/300', 'https://picsum.photos/400/300'],
-          ),
-          isGridView: true,
-        ),
-        ProductTile(
-          product: Product(
-            name: 'Dettol Skincare Handwash - Moisturizing and Hydrating', 
-            description: 'Dettol Skincare Handwash is our Signature product and is bestseller',
-            price: 10,
-            images: ['https://picsum.photos/400', 'https://picsum.photos/300', 'https://picsum.photos/400/300'],
-          ),
-          isGridView: true,
-        ),
-      ],
+        );
+      },
     );
   }
 }

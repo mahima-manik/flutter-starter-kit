@@ -4,10 +4,10 @@ import '../models/product.dart';
 class FirestoreService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<List<Product>> fetchAllProducts() async {
+  Stream<List<Product>> fetchAllProducts() async* {
     try {
       QuerySnapshot querySnapshot = await _firestore.collection('products').get();
-      return querySnapshot.docs.map((doc) {
+      yield querySnapshot.docs.map((doc) {
         return Product(
           name: doc['name'],
           description: doc['description'],

@@ -59,7 +59,7 @@ class ProductTile extends StatelessWidget {
                   ),
                   IconButton(
                     onPressed: () {},
-                    icon: Icon(Icons.add_shopping_cart, color: Theme.of(context).colorScheme.primary),
+                    icon: Icon(Icons.add_shopping_cart, color: Theme.of(context).colorScheme.onSecondary.withOpacity(0.5)),
                     // label: Text('Add to Cart', style: TextStyle(color: Theme.of(context).colorScheme.primary)),
                   ),
                 ],
@@ -76,6 +76,7 @@ class ProductTile extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center, // Changed to center the content
       children: <Widget>[
         Expanded(
+          flex: 2,
           child: AspectRatio(
             aspectRatio: 1,
             child: ClipRRect(
@@ -83,6 +84,7 @@ class ProductTile extends StatelessWidget {
               child: Image.network(
                 product.images.first,
                 fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) => Icon(Icons.error_outline, color: Theme.of(context).colorScheme.onSecondary),
               ),
             ),
           ),
