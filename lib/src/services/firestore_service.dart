@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/product.dart';
+import 'storage_service.dart';
 
 class FirestoreService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -7,15 +8,19 @@ class FirestoreService {
   Stream<List<Product>> fetchAllProducts() async* {
     try {
       QuerySnapshot querySnapshot = await _firestore.collection('products').get();
-      yield querySnapshot.docs.map((doc) {
-        return Product(
+      List<Product> products = [];
+      for (var doc in querySnapshot.docs) {
+        List<String> imageUrls = await StorageService().getProductImages(doc.id);
+        Product product = Product(
           name: doc['name'],
           description: doc['description'],
           price: doc['price'].toDouble(),
           rating: doc['rating'].toDouble(),
-          images: List<String>.from(doc['images']),
+          images: imageUrls,
         );
-      }).toList();
+        products.add(product);
+      }
+      yield products;
     } catch (e) {
       throw Exception('Failed to fetch products: $e');
     }

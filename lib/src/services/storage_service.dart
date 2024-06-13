@@ -47,4 +47,20 @@ class StorageService {
       await photoRef.delete();
     }
   }
+
+  Future<List<String>> getProductImages(String productId) async {
+    final productImagesRef = _storage.ref().child('products/$productId/');
+
+    try {
+      final ListResult result = await productImagesRef.listAll();
+      List<String> imageUrls = [];
+      for (var item in result.items) {
+        String url = await item.getDownloadURL();
+        imageUrls.add(url);
+      }
+      return imageUrls;
+    } catch (e) {
+      return [];
+    }
+  }
 }
