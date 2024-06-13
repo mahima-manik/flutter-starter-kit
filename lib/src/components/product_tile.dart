@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/product.dart';
 import '../pages/product_info.dart';
+import 'star_rating.dart';
 
 class ProductTile extends StatelessWidget {
   final Product product;
@@ -49,7 +50,8 @@ class ProductTile extends StatelessWidget {
                 style: Theme.of(context).textTheme.titleLarge,
                 overflow: TextOverflow.ellipsis,
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 5),
+              StarRating(rating: product.rating),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
