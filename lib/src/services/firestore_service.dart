@@ -12,6 +12,7 @@ class FirestoreService {
       for (var doc in querySnapshot.docs) {
         List<String> imageUrls = await StorageService().getProductImages(doc.id);
         Product product = Product(
+          id: doc.id,
           name: doc['name'],
           description: doc['description'],
           price: doc['price'].toDouble(),

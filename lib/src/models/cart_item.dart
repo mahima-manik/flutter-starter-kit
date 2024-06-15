@@ -1,9 +1,10 @@
-class CartItem {
-  final String productId;
-  int quantity;
-  double price;
+import '../models/product.dart';
 
-  CartItem({required this.productId, required this.quantity, required this.price});
+class CartItem {
+  final Product product;
+  int quantity;
+
+  CartItem(this.product, {required this.quantity});
 
   void incrementQuantity() {
     quantity++;
@@ -15,5 +16,5 @@ class CartItem {
     }
   }
 
-  double get totalPrice => quantity * price;
+  double get totalPrice => quantity * product.price;
 }
