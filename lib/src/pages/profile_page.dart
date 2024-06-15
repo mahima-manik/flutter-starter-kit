@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../auth/auth_provider.dart';
+import '../providers/auth_provider.dart';
 import '../components/text_field.dart';
 
 class ProfilePage extends StatefulWidget {

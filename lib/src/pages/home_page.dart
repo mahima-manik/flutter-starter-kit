@@ -5,7 +5,7 @@ import '../components/custom_drawer.dart';
 import '../components/product_tile.dart';
 import '../models/product.dart';
 import '../services/firestore_service.dart';
-import '../theme/theme_provider.dart';
+import '../providers/theme_provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -38,11 +38,11 @@ class _HomePageState extends State<HomePage> {
       body: StreamBuilder<List<Product>>(
         stream: FirestoreService().fetchAllProducts(),
         builder: (context, snapshot) {
+          if (!snapshot.hasData || snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
           if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
-          }
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
           }
           final products = snapshot.data ?? [];
           return Center(
