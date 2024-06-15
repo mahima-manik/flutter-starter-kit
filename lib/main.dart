@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 
 import 'firebase_options.dart';
 import 'src/pages/auth_page.dart';
+import 'src/providers/cart_provider.dart';
 import 'src/providers/theme_provider.dart';
 import 'src/providers/auth_provider.dart';
 
@@ -17,7 +18,8 @@ void main() async {
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (context) => ThemeProvider()),
-      ChangeNotifierProvider(create: (context) => UserAuthProvider())
+      ChangeNotifierProvider(create: (context) => UserAuthProvider()),
+      ChangeNotifierProvider(create: (context) => CartProvider()),
     ],
     child: MyApp())
   );

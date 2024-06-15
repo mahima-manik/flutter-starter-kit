@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../components/image_gallery.dart';
 import '../components/quantity_selector.dart';
 import '../components/star_rating.dart';
+import '../models/cart_item.dart';
 import '../models/product.dart';
+import '../providers/cart_provider.dart';
 
 class ProductInfoPage extends StatelessWidget {
   final Product product;
@@ -63,6 +66,7 @@ class ProductInfoPage extends StatelessWidget {
                         initialQuantity: quantity,
                         onQuantityChanged: (int newQuantity) {
                           quantity = newQuantity;
+                          context.read<CartProvider>().addToCart(CartItem(product, quantity: quantity));
                         },
                       ),
                     ],
