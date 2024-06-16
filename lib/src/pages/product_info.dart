@@ -3,9 +3,9 @@ import 'package:provider/provider.dart';
 import '../components/image_gallery.dart';
 import '../components/quantity_selector.dart';
 import '../components/star_rating.dart';
-import '../models/cart_item.dart';
 import '../models/product.dart';
 import '../providers/cart_provider.dart';
+import 'cart_page.dart';
 
 class ProductInfoPage extends StatelessWidget {
   final Product product;
@@ -29,7 +29,9 @@ class ProductInfoPage extends StatelessWidget {
                 children: [
                   IconButton(
                     icon: const Icon(Icons.shopping_cart),
-                    onPressed: () => {}, // You might want to navigate to the cart page or perform another action
+                    onPressed: () => {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => CartPage()))
+                    },
                   ),
                   if (cart.totalItems > 0)
                     CircleAvatar(
