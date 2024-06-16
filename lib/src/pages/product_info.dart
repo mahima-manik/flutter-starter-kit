@@ -22,9 +22,31 @@ class ProductInfoPage extends StatelessWidget {
             icon: const Icon(Icons.search),
             onPressed: () => {},
           ),
-          IconButton(
-            icon: const Icon(Icons.shopping_cart),
-            onPressed: () => {},
+          Consumer<CartProvider>(
+            builder: (context, cart, child) {
+              return Stack(
+                alignment: Alignment.topRight,
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.shopping_cart),
+                    onPressed: () => {}, // You might want to navigate to the cart page or perform another action
+                  ),
+                  if (cart.totalItems > 0)
+                    CircleAvatar(
+                      radius: 10.0,
+                      backgroundColor: Colors.red,
+                      foregroundColor: Colors.white,
+                      child: Text(
+                        cart.totalItems.toString(),
+                        style: const TextStyle(
+                          fontSize: 12.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                ],
+              );
+            },
           ),
         ],
       ),
@@ -65,9 +87,15 @@ class ProductInfoPage extends StatelessWidget {
                       QuantitySelector(
                         initialQuantity: quantity,
                         onQuantityChanged: (int newQuantity) {
+                          int difference = newQuantity - quantity;
+                          if (difference > 0) {
+                            context.read<CartProvider>().addToCart(product, difference);
+                          }
+                          else {
+                            context.read<CartProvider>().removeFromCart(product.id, -difference);
+                          }
                           quantity = newQuantity;
-                          context.read<CartProvider>().addToCart(CartItem(product, quantity: quantity));
-                        },
+                        }
                       ),
                     ],
                   ),
