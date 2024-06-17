@@ -32,4 +32,12 @@ class CartProvider extends ChangeNotifier {
   int getProductCount(String productId) {
     return _items.containsKey(productId) ? _items[productId]!.quantity : 0;
   }
+
+  Product? getProductById(String productId) {
+    return _items.containsKey(productId) ? _items[productId]!.product : null;
+  }
+
+  Product getProductByIndex(int index) {
+    return _items.values.toList()[index].product;
+  }
 }
