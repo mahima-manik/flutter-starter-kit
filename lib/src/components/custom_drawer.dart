@@ -55,7 +55,7 @@ class CustomDrawer extends StatelessWidget {
           ),
           const Spacer(),
           ListTile(
-            contentPadding: const EdgeInsets.all(30),
+            contentPadding: const EdgeInsets.only(left: 30, bottom: 30),
             leading: Icon(Icons.logout, color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5)),
             title: Text('Logout', style: TextStyle(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5))),
             onTap: () {

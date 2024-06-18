@@ -30,6 +30,7 @@ class CartProvider extends ChangeNotifier {
   // Returns the total count of all items in the cart
   int get totalItems => _itemsMap.values.fold(0, (total, item) => total + item.quantity);
 
+  // Returns the total count of unique products in the cart
   int get totalProducts => _itemsMap.length;
 
   // Checks if a product exists in the cart and returns its count
