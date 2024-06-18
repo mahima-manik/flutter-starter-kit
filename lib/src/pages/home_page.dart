@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../components/cart_icon.dart';
 import '../components/custom_drawer.dart';
 import '../components/product_tile.dart';
 import '../models/product.dart';
 import '../services/firestore_service.dart';
 import '../providers/theme_provider.dart';
+import 'cart_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -25,8 +27,7 @@ class _HomePageState extends State<HomePage> {
           IconButton(icon: const Icon(Icons.brightness_4), onPressed: () {
             context.read<ThemeProvider>().toggleTheme();
           }),
-          IconButton(icon: const Icon(Icons.shopping_cart), onPressed: () {
-          }),
+          const CartIconButton(),
           IconButton(icon: const Icon(Icons.view_list), onPressed: () {
             setState(() {
               _isListView = !_isListView;

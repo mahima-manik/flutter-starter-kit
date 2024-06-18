@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../components/cart_icon.dart';
 import '../components/image_gallery.dart';
 import '../components/star_rating.dart';
 import '../models/product.dart';
@@ -47,40 +48,7 @@ class _ProductInfoPageState extends State<ProductInfoPage> {
             icon: const Icon(Icons.search),
             onPressed: () => {},
           ),
-          Consumer<CartProvider>(
-            builder: (context, cart, child) {
-              return Stack(
-                alignment: Alignment.topRight,
-                children: [
-                  IconButton(
-                    icon: const Icon(Icons.shopping_cart),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const CartPage()),
-                      ).then((value) => setState(() {
-                        // This is used to update the currentQuantity to the latest quantity in the cart.
-                        currentQuantity = cart.getProductCount(widget.product.id);
-                      }));
-                    },
-                  ),
-                  if (cart.totalItems > 0)
-                    CircleAvatar(
-                      radius: 10.0,
-                      backgroundColor: Colors.red,
-                      foregroundColor: Colors.white,
-                      child: Text(
-                        cart.totalItems.toString(),
-                        style: const TextStyle(
-                          fontSize: 12.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                ],
-              );
-            },
-          ),
+          const CartIconButton(),
         ],
       ),
       body: SingleChildScrollView(
