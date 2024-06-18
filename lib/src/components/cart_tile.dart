@@ -19,9 +19,10 @@ class CartTile extends StatelessWidget {
       leading: Image.network(cartItem.product.images[0], width: 50, height: 50),
       title: Text(cartItem.product.name),
       subtitle: Text('${cartItem.quantity} item(s)'),
-      trailing: Container(
-        width: 120,
+      trailing: FittedBox(
+        fit: BoxFit.fitWidth,
         child: Row(
+          mainAxisSize: MainAxisSize.min,
           children: [
             IconButton(
               icon: const Icon(Icons.remove),
