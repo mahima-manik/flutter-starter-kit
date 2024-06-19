@@ -10,6 +10,13 @@ class PaymentService {
       // 1. create payment intent on the server
       final paymentIntentData = await _createPaymentIntent(amount, currency);
       print(paymentIntentData);
+
+      // 2. initialize the payment sheet
+      await Stripe.instance.presentPaymentSheet().then((value) {
+        print(value);
+      }).catchError((error) {
+        print(error);
+      });
     } catch (e) {
       print(e);
     }
