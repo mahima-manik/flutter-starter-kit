@@ -74,15 +74,18 @@ class ProductTile extends StatelessWidget {
                       : Row(
                           children: [
                             IconButton(
-                              icon: Icon(Icons.remove, color: Theme.of(context).colorScheme.primary),
+                              icon: const Icon(Icons.remove),
                               onPressed: () {
                                 cartProvider.removeFromCart(product.id, 1);
                               },
                             ),
                             Text('$productCount'),
-                            IconButton(onPressed: () {
-                              cartProvider.addToCart(product, 1);
-                            }, icon: Icon(Icons.add, color: Theme.of(context).colorScheme.primary))
+                            IconButton(
+                              icon: const Icon(Icons.add),
+                              onPressed: () {
+                                cartProvider.addToCart(product, 1);
+                              },
+                            )
                           ],
                         );
                     },
@@ -142,14 +145,14 @@ class ProductTile extends StatelessWidget {
                       : Row(
                           children: [
                             IconButton(
-                              icon: Icon(Icons.remove, color: Theme.of(context).colorScheme.primary),
+                              icon: const Icon(Icons.remove),
                               onPressed: () {
                                 cartProvider.removeFromCart(product.id, 1);
                               },
                             ),
                             Text('$productCount'),
                             IconButton(
-                              icon: Icon(Icons.add, color: Theme.of(context).colorScheme.primary),
+                              icon: const Icon(Icons.add),
                               onPressed: () {
                                 cartProvider.addToCart(product, 1);
                               },
