@@ -19,10 +19,7 @@ class CartTile extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: ListTile(
         contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-        tileColor: Theme.of(context).colorScheme.surface,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
+        horizontalTitleGap: 10,
         leading: Image.network(cartItem.product.images[0], width: 50, height: 50),
         title: Text(cartItem.product.name),
         subtitle: Text('\$${cartItem.product.price.toStringAsFixed(2)}'),
