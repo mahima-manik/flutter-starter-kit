@@ -7,7 +7,6 @@ import '../components/product_tile.dart';
 import '../models/product.dart';
 import '../services/firestore_service.dart';
 import '../providers/theme_provider.dart';
-import 'cart_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

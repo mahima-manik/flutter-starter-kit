@@ -23,6 +23,8 @@ dependencies:
   intl:
   cloud_firestore: ^5.0.1
   flutter_stripe:
+  flutter_dotenv:
+  http:
 
 dev_dependencies:
   flutter_test:
@@ -39,3 +41,4 @@ flutter:
   assets:
     # Add assets from the images directory to the application.
     - assets/images/
+    - assets/.env

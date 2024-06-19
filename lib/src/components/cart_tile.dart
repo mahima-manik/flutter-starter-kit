@@ -7,11 +7,11 @@ class CartTile extends StatelessWidget {
   final VoidCallback onRemove;
 
   const CartTile({
-    Key? key,
+    super.key,
     required this.cartItem,
     required this.onAdd,
     required this.onRemove,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
