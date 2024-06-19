@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../models/product.dart';
 import '../pages/product_info.dart';
+import '../providers/cart_provider.dart';
 import 'star_rating.dart';
 
 class ProductTile extends StatelessWidget {
@@ -59,10 +61,31 @@ class ProductTile extends StatelessWidget {
                     '\$${product.price.toStringAsFixed(2)}',
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).colorScheme.onSurface),
                   ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.add_shopping_cart, color: Theme.of(context).colorScheme.onSecondary.withOpacity(0.5)),
-                    // label: Text('Add to Cart', style: TextStyle(color: Theme.of(context).colorScheme.primary)),
+                  Consumer<CartProvider>(
+                    builder: (context, cartProvider, child) {
+                      int productCount = cartProvider.getProductCount(product.id);
+                      return productCount == 0
+                      ? ElevatedButton(
+                        onPressed: () {
+                          cartProvider.addToCart(product, 1);
+                        },
+                        child: const Text('Add'),
+                      )
+                      : Row(
+                          children: [
+                            IconButton(
+                              icon: Icon(Icons.remove, color: Theme.of(context).colorScheme.primary),
+                              onPressed: () {
+                                cartProvider.removeFromCart(product.id, 1);
+                              },
+                            ),
+                            Text('$productCount'),
+                            IconButton(onPressed: () {
+                              cartProvider.addToCart(product, 1);
+                            }, icon: Icon(Icons.add, color: Theme.of(context).colorScheme.primary))
+                          ],
+                        );
+                    },
                   ),
                 ],
               ),
@@ -106,9 +129,34 @@ class ProductTile extends StatelessWidget {
                     '\$${product.price.toStringAsFixed(2)}',
                     style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Theme.of(context).colorScheme.onSurface),
                   ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.add_shopping_cart, color: Theme.of(context).colorScheme.primary),
+                  Consumer<CartProvider>(
+                    builder: (context, cartProvider, child) {
+                      int productCount = cartProvider.getProductCount(product.id);
+                      return productCount == 0
+                      ? ElevatedButton(
+                        onPressed: () {
+                          cartProvider.addToCart(product, 1);
+                        },
+                        child: const Text('Add'),
+                      )
+                      : Row(
+                          children: [
+                            IconButton(
+                              icon: Icon(Icons.remove, color: Theme.of(context).colorScheme.primary),
+                              onPressed: () {
+                                cartProvider.removeFromCart(product.id, 1);
+                              },
+                            ),
+                            Text('$productCount'),
+                            IconButton(
+                              icon: Icon(Icons.add, color: Theme.of(context).colorScheme.primary),
+                              onPressed: () {
+                                cartProvider.addToCart(product, 1);
+                              },
+                            ),
+                          ],
+                        );
+                    },
                   ),
                 ],
               ),

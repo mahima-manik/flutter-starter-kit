@@ -4,11 +4,11 @@ class QuantitySelector extends StatefulWidget {
   final int initialQuantity;
   final ValueChanged<int> onQuantityChanged;
 
-  QuantitySelector({
-    Key? key,
+  const QuantitySelector({
+    super.key,
     this.initialQuantity = 0,
     required this.onQuantityChanged,
-  }) : super(key: key);
+  });
 
   @override
   _QuantitySelectorState createState() => _QuantitySelectorState();
