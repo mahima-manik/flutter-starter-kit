@@ -25,7 +25,7 @@ class CartTile extends StatelessWidget {
         ),
         leading: Image.network(cartItem.product.images[0], width: 50, height: 50),
         title: Text(cartItem.product.name),
-        subtitle: Text('${cartItem.quantity} item(s)'),
+        subtitle: Text('\$${cartItem.product.price.toStringAsFixed(2)}'),
         trailing: FittedBox(
           fit: BoxFit.fitWidth,
           child: Row(
@@ -35,7 +35,7 @@ class CartTile extends StatelessWidget {
                 icon: const Icon(Icons.remove),
                 onPressed: onRemove,
               ),
-              Text('\$${cartItem.totalPrice.toStringAsFixed(2)}'),
+              Text(cartItem.quantity.toString(), style: Theme.of(context).textTheme.titleMedium),
               IconButton(
                 icon: const Icon(Icons.add),
                 onPressed: onAdd,
