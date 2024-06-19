@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../components/cart_tile.dart';
 import '../providers/cart_provider.dart';
+import 'home_page.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({super.key});
@@ -19,7 +20,7 @@ class CartPageState extends State<CartPage> {
         actions: [
           IconButton(
             icon: const Icon(Icons.add_shopping_cart),
-            onPressed: () => {},
+            onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const HomePage())),
           )
         ],
       ),

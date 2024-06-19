@@ -5,7 +5,6 @@ import '../components/image_gallery.dart';
 import '../components/star_rating.dart';
 import '../models/product.dart';
 import '../providers/cart_provider.dart';
-import 'cart_page.dart';
 
 class ProductInfoPage extends StatefulWidget {
   final Product product;
@@ -48,7 +47,11 @@ class _ProductInfoPageState extends State<ProductInfoPage> {
             icon: const Icon(Icons.search),
             onPressed: () => {},
           ),
-          const CartIconButton(),
+          CartIconButton(onCartUpdated: () {
+            setState(() {
+              currentQuantity = context.read<CartProvider>().getProductCount(widget.product.id);
+            });
+          },),
         ],
       ),
       body: SingleChildScrollView(

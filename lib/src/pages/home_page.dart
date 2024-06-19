@@ -27,12 +27,12 @@ class _HomePageState extends State<HomePage> {
           IconButton(icon: const Icon(Icons.brightness_4), onPressed: () {
             context.read<ThemeProvider>().toggleTheme();
           }),
-          const CartIconButton(),
-          IconButton(icon: const Icon(Icons.view_list), onPressed: () {
-            setState(() {
-              _isListView = !_isListView;
-            });
-          }),
+          CartIconButton(onCartUpdated: () {}),
+          // IconButton(icon: const Icon(Icons.view_list), onPressed: () {
+          //   setState(() {
+          //     _isListView = !_isListView;
+          //   });
+          // }),
         ],
       ),
       drawer: const CustomDrawer(),

@@ -4,7 +4,8 @@ import '../providers/cart_provider.dart';
 import '../pages/cart_page.dart';
 
 class CartIconButton extends StatelessWidget {
-  const CartIconButton({super.key});
+  final Function() onCartUpdated;
+  const CartIconButton({super.key, required this.onCartUpdated});
 
   @override
   Widget build(BuildContext context) {
@@ -15,12 +16,13 @@ class CartIconButton extends StatelessWidget {
           children: [
             IconButton(
               icon: const Icon(Icons.shopping_cart),
+              tooltip: 'Cart',
               onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const CartPage()),
                 ).then((value) => {
-                  // Assuming you have a way to refresh the parent widget or it's handled globally
+                  onCartUpdated()
                 });
               },
             ),
