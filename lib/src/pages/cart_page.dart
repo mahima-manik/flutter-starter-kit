@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../components/cart_tile.dart';
 import '../providers/cart_provider.dart';
 import 'home_page.dart';
+import 'payment_page.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({super.key});
@@ -78,7 +79,7 @@ class CartPageState extends State<CartPage> {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        // Handle pay now action
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const PaymentPage()));
                       },
                       child: const Text('Pay Now'),
                     ),
