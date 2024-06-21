@@ -11,12 +11,19 @@ class FirestoreService {
       List<Product> products = [];
       for (var doc in querySnapshot.docs) {
         List<String> imageUrls = await StorageService().getProductImages(doc.id);
+        double? price = _parseDouble(doc['price']);
+        double? rating = _parseDouble(doc['rating']) ?? 0.0;
+
+        if (price == null) {
+          continue; // Skip this entry if price cannot be converted to double
+        }
+
         Product product = Product(
           id: doc.id,
           name: doc['name'],
           description: doc['description'],
-          price: doc['price'].toDouble(),
-          rating: doc['rating'].toDouble(),
+          price: price,
+          rating: rating,
           images: imageUrls,
         );
         products.add(product);
@@ -25,5 +32,18 @@ class FirestoreService {
     } catch (e) {
       throw Exception('Failed to fetch products: $e');
     }
+  }
+
+  double? _parseDouble(dynamic value) {
+    try {
+      if (value is String) {
+        return double.parse(value);
+      } else if (value is num) {
+        return value.toDouble();
+      }
+    } catch (e) {
+      print('Failed to parse value to double: $e');
+    }
+    return null;
   }
 }

@@ -8,6 +8,8 @@ class OrderPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double total = cartItems.fold(0, (sum, item) => sum + item.product.price * item.quantity);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Order Confirmation'),
@@ -31,6 +33,19 @@ class OrderPage extends StatelessWidget {
                   trailing: Text('\$${(item.product.price * item.quantity).toStringAsFixed(2)}'),
                 );
               },
+            ),
+          ),
+          const Divider(
+            height: 20,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                const Text('Total:', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                Text('\$${total.toStringAsFixed(2)}', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              ],
             ),
           ),
         ],
