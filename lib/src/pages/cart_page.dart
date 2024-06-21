@@ -79,7 +79,10 @@ class CartPageState extends State<CartPage> {
                     ),
                     ElevatedButton(
                       onPressed: cartProvider.totalProducts > 0 ? () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => const PaymentPage()));
+                        Navigator.pushReplacement(
+                          context, 
+                          MaterialPageRoute(builder: (context) => const PaymentPage())
+                        );
                       } : null,
                       child: const Text('Pay Now'),
                     ),

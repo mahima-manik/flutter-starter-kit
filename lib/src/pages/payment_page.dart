@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../providers/cart_provider.dart';
 import '../services/payment_service.dart';
 import 'cart_page.dart';
+import 'order_page.dart';
 
 class PaymentPage extends StatefulWidget {
   const PaymentPage({super.key});
@@ -13,24 +15,33 @@ class PaymentPage extends StatefulWidget {
 class _PaymentPageState extends State<PaymentPage> {
   final PaymentService _paymentService = PaymentService();
   String _message = 'Initializing payment...'; // Default message
-  final CartProvider cartProvider = CartProvider();
-
   @override
   void initState() {
     super.initState();
-    _initPayment();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _initPayment();
+    });
   }
 
   Future<void> _initPayment() async {
+    final cartProvider = Provider.of<CartProvider>(context, listen: false);
+    var cartItems = cartProvider.getCartItems();
+    
     try {
-      await _paymentService.initPaymentSheet("1000", "USD");
+      final cartValue = cartProvider.getCartTotal() * 100;
+      await _paymentService.initPaymentSheet(cartValue.toInt().toString(), 'USD');
       setState(() {
-        _message = 'Payment successful!';
+        _message = 'Payment successful!\n\nRedirecting to order page...';
       });
-      cartProvider.clearCart();
+      Future.delayed(const Duration(seconds: 3), () {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => OrderPage(cartItems: cartItems)),
+        ).then((_) => cartProvider.clearCart());
+      });
     } catch (e) {
       setState(() {
-        _message = 'Payment failed: ${e.toString()}. Redirecting to cart page.';
+        _message = 'Payment failed: ${e.toString()}\n\nRedirecting to cart page...';
       });
       Future.delayed(const Duration(seconds: 3), () {
         Navigator.pushReplacement(

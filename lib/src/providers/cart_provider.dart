@@ -63,6 +63,10 @@ class CartProvider extends ChangeNotifier {
     }
     return null;
   }
+  // Get cart total value and currency
+  double getCartTotal() {
+    return _itemsMap.values.fold(0, (total, item) => total + item.product.price * item.quantity);
+  }
 
   // Retrieves all cart items as a list, useful for item builders
   List<CartItem> getCartItems() {

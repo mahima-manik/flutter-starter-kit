@@ -11,7 +11,12 @@ class PaymentService {
     final customerId = customerData['id'];
     
     // Create payment intent
-    final paymentIntentData = await _createPaymentIntent(amount, 'USD', customerId);
+    final paymentIntentData = await _createPaymentIntent(amount, currency, customerId);
+    
+    // Check if payment intent is successful
+    if (paymentIntentData.containsKey('error')) {
+      throw Exception('Payment intent failed: ${paymentIntentData['error']}');
+    }
 
     // Initialize the payment sheet
     await Stripe.instance.initPaymentSheet(
@@ -28,7 +33,7 @@ class PaymentService {
       print('Payment succeeded: $value');
     }).catchError((error) {
       print('Error presenting payment sheet: $error');
-      throw Exception('Payment cancelled or failed'); // Throw an exception if payment is cancelled or fails
+      throw Exception('Payment cancelled or failed');
     });
   }
 
@@ -56,27 +61,22 @@ class PaymentService {
   }
 
   Future<Map<String, dynamic>> _createPaymentIntent(String amount, String currency, String customerId) async {
-    try {
-      // Request body
-      Map<String, dynamic> body = {
-        'amount': amount,
-        'currency': currency,
-        'customer': customerId,
-        'description': 'Payment for the test project services'
-      };
+    Map<String, dynamic> body = {
+    'amount': amount,
+    'currency': currency,
+      'customer': customerId,
+      'description': 'Payment for the test project services'
+    };
 
-      // Make post request to Stripe
-      var response = await http.post(
-        Uri.parse('https://api.stripe.com/v1/payment_intents'),
-        headers: {
-          'Authorization': 'Bearer ${dotenv.env['STRIPE_SECRET_KEY']}',
-          'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: body,
-      );
-      return json.decode(response.body);
-    } catch (err) {
-      throw Exception(err.toString());
-    }
+    // Make post request to Stripe
+    var response = await http.post(
+      Uri.parse('https://api.stripe.com/v1/payment_intents'),
+      headers: {
+        'Authorization': 'Bearer ${dotenv.env['STRIPE_SECRET_KEY']}',
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: body,
+    );
+    return json.decode(response.body);
   }
 }
