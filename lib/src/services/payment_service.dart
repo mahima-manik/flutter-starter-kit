@@ -47,7 +47,7 @@ class PaymentService {
       Uri.parse('https://api.stripe.com/v1/customers'),
       headers: {
         'Authorization': 'Bearer ${dotenv.env['STRIPE_SECRET_KEY']}',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/x-www-form-urlencoded'
       },
       body: body,
     );

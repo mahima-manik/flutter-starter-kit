@@ -10,6 +10,7 @@ class PaymentPage extends StatefulWidget {
 
 class _PaymentPageState extends State<PaymentPage> {
   final PaymentService _paymentService = PaymentService();
+  String _message = 'Initializing payment...'; // Default message
 
   @override
   void initState() {
@@ -18,7 +19,18 @@ class _PaymentPageState extends State<PaymentPage> {
   }
 
   Future<void> _initPayment() async {
-    await _paymentService.initPaymentSheet("1000", "USD");
+    try {
+      await _paymentService.initPaymentSheet("1000", "USD");
+      setState(() {
+        _message = 'Payment successful!';
+      });
+      // Clear the cart here or navigate to a success page
+    } catch (e) {
+      setState(() {
+        _message = 'Payment failed: ${e.toString()}';
+      });
+      // Handle failure, possibly allowing retry
+    }
   }
 
   @override
@@ -27,8 +39,8 @@ class _PaymentPageState extends State<PaymentPage> {
       appBar: AppBar(
         title: const Text('Payment'),
       ),
-      body: const Center(
-        child: Text('Initializing payment...'),
+      body: Center(
+        child: Text(_message),
       ),
     );
   }
