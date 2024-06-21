@@ -27,6 +27,12 @@ class CartProvider extends ChangeNotifier {
     }
   }
 
+  // Clears the cart
+  void clearCart() {
+    _itemsMap.clear();
+    notifyListeners();
+  }
+
   // Returns the total count of all items in the cart
   int get totalItems => _itemsMap.values.fold(0, (total, item) => total + item.quantity);
 

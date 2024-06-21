@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import '../providers/cart_provider.dart';
 import '../services/payment_service.dart';
+import 'cart_page.dart';
 
 class PaymentPage extends StatefulWidget {
   const PaymentPage({super.key});
@@ -11,6 +13,7 @@ class PaymentPage extends StatefulWidget {
 class _PaymentPageState extends State<PaymentPage> {
   final PaymentService _paymentService = PaymentService();
   String _message = 'Initializing payment...'; // Default message
+  final CartProvider cartProvider = CartProvider();
 
   @override
   void initState() {
@@ -24,12 +27,17 @@ class _PaymentPageState extends State<PaymentPage> {
       setState(() {
         _message = 'Payment successful!';
       });
-      // Clear the cart here or navigate to a success page
+      cartProvider.clearCart();
     } catch (e) {
       setState(() {
-        _message = 'Payment failed: ${e.toString()}';
+        _message = 'Payment failed: ${e.toString()}. Redirecting to cart page.';
       });
-      // Handle failure, possibly allowing retry
+      Future.delayed(const Duration(seconds: 3), () {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const CartPage()),
+        );
+      });
     }
   }
 
