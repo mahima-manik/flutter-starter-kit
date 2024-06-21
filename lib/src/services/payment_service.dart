@@ -28,6 +28,7 @@ class PaymentService {
       print('Payment succeeded: $value');
     }).catchError((error) {
       print('Error presenting payment sheet: $error');
+      throw Exception('Payment cancelled or failed'); // Throw an exception if payment is cancelled or fails
     });
   }
 

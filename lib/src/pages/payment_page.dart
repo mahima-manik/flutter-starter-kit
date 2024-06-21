@@ -47,8 +47,11 @@ class _PaymentPageState extends State<PaymentPage> {
       appBar: AppBar(
         title: const Text('Payment'),
       ),
-      body: Center(
-        child: Text(_message),
+      body: Padding(
+        padding: const EdgeInsets.all(25.0),
+        child: Center(
+          child: Text(_message),
+        ),
       ),
     );
   }
