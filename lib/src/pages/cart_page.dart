@@ -78,9 +78,9 @@ class CartPageState extends State<CartPage> {
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                     ElevatedButton(
-                      onPressed: () {
+                      onPressed: cartProvider.totalProducts > 0 ? () {
                         Navigator.push(context, MaterialPageRoute(builder: (context) => const PaymentPage()));
-                      },
+                      } : null,
                       child: const Text('Pay Now'),
                     ),
                   ],
