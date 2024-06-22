@@ -12,7 +12,7 @@ class EmailService {
       'Authorization': 'Bearer $_apiKey',
     };
     final body = jsonEncode({
-      'from': 'onboarding@resend.dev',
+      'from': dotenv.env['SENDER_EMAIL_ADDRESS'] ?? '',
       'to': toEmail,
       'subject': 'Order Confirmation',
       'html': '<h1>Order Confirmation</h1><p>Thank you for your order. Your order ID is $orderId and the total amount is \$${totalAmount.toStringAsFixed(2)}.</p>',

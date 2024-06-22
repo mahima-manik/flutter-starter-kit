@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../providers/auth_provider.dart';
 import '../providers/cart_provider.dart';
 import '../services/payment_service.dart';
 import 'cart_page.dart';
@@ -25,11 +26,18 @@ class _PaymentPageState extends State<PaymentPage> {
 
   Future<void> _initPayment() async {
     final cartProvider = Provider.of<CartProvider>(context, listen: false);
+    final userProvider = Provider.of<UserAuthProvider>(context, listen: false);
     var cartItems = cartProvider.getCartItems();
     
     try {
       final cartValue = cartProvider.getCartTotal() * 100;
-      await _paymentService.initPaymentSheet(cartValue.toInt().toString(), 'USD');
+      await _paymentService.initPaymentSheet(
+        cartValue.toInt().toString(), 
+        'USD', 
+        userProvider.user!.email!, 
+        userProvider.user!.displayName!, 
+        'Test Address'
+      );
       setState(() {
         _message = 'Payment successful!\n\nRedirecting to order page...';
       });

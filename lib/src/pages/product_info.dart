@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../components/cart_icon.dart';
+import '../components/expandable_text_tile.dart';
 import '../components/image_gallery.dart';
 import '../components/star_rating.dart';
 import '../models/product.dart';
@@ -119,18 +120,10 @@ class _ProductInfoPageState extends State<ProductInfoPage> {
                     ],
                   ),
                   const SizedBox(height: 10),
-                  ExpansionTile(
-                    tilePadding: const EdgeInsets.only(left: 0, right: 15),
-                    title: const Text('Product Information'),
-                    shape: const Border(),
-                    controlAffinity: ListTileControlAffinity.trailing,
-                    initiallyExpanded: false,
-                    children: <Widget>[
-                      ListTile(
-                        leading: const Icon(Icons.info_outlined),
-                        title: Text(widget.product.description),
-                      ),
-                    ],
+                  ExpandableTextTile(
+                    title: 'Product Description',
+                    text: widget.product.description,
+                    icon: Icons.info_outline,
                   ),
                 ],
               ),

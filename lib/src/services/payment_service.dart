@@ -1,13 +1,17 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:http/http.dart' as http;
+import 'email_service.dart';
 
 class PaymentService {
-  Future<void> initPaymentSheet(String amount, String currency) async {
+  final EmailService _emailService = EmailService();
+
+  Future<void> initPaymentSheet(String amount, String currency, String userEmail, String userName, String userAddress) async {
     // Create a customer
-    final customerData = await _createStripeCustomer('test@gmail.com', 'Test User', 'Test Address');
+    final customerData = await _createStripeCustomer(userEmail, userName, userAddress);
     final customerId = customerData['id'];
     
     // Create payment intent
@@ -25,12 +29,24 @@ class PaymentService {
         merchantDisplayName: dotenv.env['MERCHANT_NAME'],
         customerId: customerId,
         customerEphemeralKeySecret: paymentIntentData['ephemeralKey'],
+        googlePay: PaymentSheetGooglePay(
+          currencyCode: currency,
+          merchantCountryCode: 'US',
+          testEnv: true,
+          label: 'Test Payment',
+          amount: amount,
+        ),
+        style: ThemeMode.system,
       ),
     );
 
     // Present the payment sheet
     await Stripe.instance.presentPaymentSheet().then((value) {
       print('Payment succeeded: $value');
+      // Assuming you have access to necessary order details here
+    _emailService.sendOrderConfirmationEmail(userEmail, 'orderId', double.parse(amount)/100).catchError((emailError) {
+      print('Failed to send confirmation email: $emailError');
+    });
     }).catchError((error) {
       print('Error presenting payment sheet: $error');
       throw Exception('Payment cancelled or failed');
