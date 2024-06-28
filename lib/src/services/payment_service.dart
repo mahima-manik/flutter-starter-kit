@@ -26,7 +26,7 @@ class PaymentService {
     await Stripe.instance.initPaymentSheet(
       paymentSheetParameters: SetupPaymentSheetParameters(
         paymentIntentClientSecret: paymentIntentData['client_secret'],
-        merchantDisplayName: dotenv.env['MERCHANT_NAME'],
+        merchantDisplayName: dotenv.get('MERCHANT_NAME'),
         customerId: customerId,
         customerEphemeralKeySecret: paymentIntentData['ephemeralKey'],
         googlePay: PaymentSheetGooglePay(
@@ -68,7 +68,7 @@ class PaymentService {
     var response = await http.post(
       Uri.parse('https://api.stripe.com/v1/customers'),
       headers: {
-        'Authorization': 'Bearer ${dotenv.env['STRIPE_SECRET_KEY']}',
+        'Authorization': 'Bearer ${dotenv.get('STRIPE_SECRET_KEY')}',
         'Content-Type': 'application/x-www-form-urlencoded'
       },
       body: body,
@@ -88,7 +88,7 @@ class PaymentService {
     var response = await http.post(
       Uri.parse('https://api.stripe.com/v1/payment_intents'),
       headers: {
-        'Authorization': 'Bearer ${dotenv.env['STRIPE_SECRET_KEY']}',
+        'Authorization': 'Bearer ${dotenv.get('STRIPE_SECRET_KEY')}',
         'Content-Type': 'application/x-www-form-urlencoded'
       },
       body: body,
