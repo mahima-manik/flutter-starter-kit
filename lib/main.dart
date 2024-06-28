@@ -12,9 +12,9 @@ import 'src/providers/auth_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   await dotenv.load(fileName: "assets/.env");
-  Stripe.publishableKey = dotenv.env['STRIPE_PUBLISHABLE_KEY']!;
+  Stripe.publishableKey = dotenv.get('STRIPE_PUBLISHABLE_KEY');
   
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
