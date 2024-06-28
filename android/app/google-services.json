@@ -7,7 +7,51 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:884793105277:android:b96156c1a80bbdffc48a14",
+        "mobilesdk_app_id": "1:884793105277:android:a061dbc9ec94dd7ac48a14",
+        "android_client_info": {
+          "package_name": "com.example.flutter_starter_kit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "884793105277-5ajs3q7sor40hbvlpor67ucqnre1jgea.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.flutter_starter_kit",
+            "certificate_hash": "1fee68d9c9f6b1049fbc9cb25c087813c0994597"
+          }
+        },
+        {
+          "client_id": "884793105277-qai87kd9aehg06f66i87v6t2tfq17e3c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFJK3SFhf0UI0NUuA3_Gc9QM8HOpQcNfQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "884793105277-qai87kd9aehg06f66i87v6t2tfq17e3c.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "884793105277-61oete7duq8vvdtgg28i0dk184pk744t.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.flutterStarterKit"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:884793105277:android:36a0db8ae72924d9c48a14",
         "android_client_info": {
           "package_name": "com.example.flutter_starter_kit"
         }
@@ -31,7 +75,7 @@
               "client_type": 3
             },
             {
-              "client_id": "884793105277-m4ha1cj3cqkg5n0b5af9n6t9g9t5it17.apps.googleusercontent.com",
+              "client_id": "884793105277-61oete7duq8vvdtgg28i0dk184pk744t.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
                 "bundle_id": "com.example.flutterStarterKit"
