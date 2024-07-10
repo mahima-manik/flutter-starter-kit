@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:image_picker/image_picker.dart';
@@ -75,8 +76,9 @@ class _ProfilePageState extends State<ProfilePage> {
 
   void updateDisplayPhoto() async {
     final ImagePicker _picker = ImagePicker();
-    // Open the image picker
-    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+    try {
+      // Open the image picker
+      final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
 
     if (image != null) {
       showDialog(
@@ -91,6 +93,13 @@ class _ProfilePageState extends State<ProfilePage> {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to update profile: $e')));
       } finally {
         Navigator.pop(context); // Ensure the progress dialog is closed
+        }
+      }
+    } catch (e) {
+       if (e is PlatformException && e.code == 'photo_access_denied') {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Photo access was denied. Please allow access to update your profile picture.')));
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to update profile: $e')));
       }
     }
   }
