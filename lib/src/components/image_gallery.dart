@@ -41,7 +41,31 @@ class _ImageGalleryState extends State<ImageGallery> {
             controller: _controller,
             itemCount: widget.imageUrls.length,
             itemBuilder: (context, index) {
-              return Image.network(widget.imageUrls[index], fit: BoxFit.contain);
+              return Image.network(
+                widget.imageUrls[index],
+                fit: BoxFit.contain,
+                loadingBuilder: (BuildContext context, Widget child,
+                    ImageChunkEvent? loadingProgress) {
+                  if (loadingProgress == null) {
+                    return child;
+                  } else {
+                    return Center(
+                      child: CircularProgressIndicator(
+                        value: loadingProgress.expectedTotalBytes != null
+                            ? loadingProgress.cumulativeBytesLoaded /
+                                (loadingProgress.expectedTotalBytes ?? 1)
+                            : null,
+                      ),
+                    );
+                  }
+                },
+                errorBuilder: (BuildContext context, Object error,
+                    StackTrace? stackTrace) {
+                  return const Center(
+                    child: Icon(Icons.error, color: Colors.red),
+                  );
+                },
+              );
             },
           ),
         ),
