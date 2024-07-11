@@ -80,23 +80,23 @@ class _ProfilePageState extends State<ProfilePage> {
       // Open the image picker
       final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
 
-    if (image != null) {
-      showDialog(
-        context: context,
-        builder: (context) => const Center(child: CircularProgressIndicator()),
-      );
-      try {
-        // Use the selected image's path
-        await context.read<UserAuthProvider>().updateUserPhoto(context, image.path);
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Profile picture updated successfully')));
-      } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to update profile: $e')));
-      } finally {
-        Navigator.pop(context); // Ensure the progress dialog is closed
+      if (image != null) {
+        showDialog(
+          context: context,
+          builder: (context) => const Center(child: CircularProgressIndicator()),
+        );
+        try {
+          // Use the selected image's path
+          await context.read<UserAuthProvider>().updateUserPhoto(context, image.path);
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Profile picture updated successfully')));
+        } catch (e) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to update profile: $e')));
+        } finally {
+          Navigator.pop(context); // Ensure the progress dialog is closed
         }
       }
     } catch (e) {
-       if (e is PlatformException && e.code == 'photo_access_denied') {
+      if (e is PlatformException && e.code == 'photo_access_denied') {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Photo access was denied. Please allow access to update your profile picture.')));
       } else {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to update profile: $e')));

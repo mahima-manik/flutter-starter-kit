@@ -17,14 +17,15 @@ class StorageService {
       final Uint8List file = await loadAsset(photoPath);
       String extension = photoPath.split('.').last;
       String formattedDate = DateFormat('yyyyMMdd_HHmmss').format(DateTime.now());
-      String fileName = 'user_uploads/profile/$userId/$formattedDate.$extension';
+      String fileName =
+          'user_uploads/profile/$userId/$formattedDate.$extension';
 
       final Reference photoRef = _storage.ref().child(fileName);
+      // Creates a new file in the storage with the given name and data
       final uploadTask = photoRef.putData(file);
 
-      final snapshot = await uploadTask.whenComplete(() {}).onError((error, stackTrace) {
-        return Future.error(error as Object);
-      });
+      // Await the upload task and handle errors
+      final TaskSnapshot snapshot = await uploadTask;
 
       final photoUrl = await snapshot.ref.getDownloadURL();
       return photoUrl;
