@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../providers/auth_provider.dart';
 import '../components/alert_dialog.dart';
+import '../components/social_login.dart';
 import '../components/text_field.dart';
 import 'auth_page.dart';
 import 'register_page.dart';
@@ -174,7 +175,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     const SizedBox(width: 10),
-                    Text('Or continue with', style: TextStyle(color: Theme.of(context).colorScheme.primary),),
+                    Text('OR', style: TextStyle(color: Theme.of(context).colorScheme.primary),),
                     const SizedBox(width: 10),
                     Expanded(
                       child: Divider(
@@ -185,30 +186,12 @@ class _LoginPageState extends State<LoginPage> {
                   ],
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+              Column(
                 children: [
-                  GestureDetector(
-                    onTap: () => signInWithGoogle(),
-                    child: Container(
-                      padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), color: Theme.of(context).colorScheme.surface),
-                      child: Image.asset(
-                        'assets/images/google-logo.png',
-                        width: 30,
-                        height: 30,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 30),
-                  Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), color: Theme.of(context).colorScheme.surface),
-                    child: Image.asset(
-                      'assets/images/facebook-logo.png',
-                      width: 35,
-                      height: 35,
-                    ),
+                  SocialLoginButton(
+                    assetPath: 'assets/images/google-logo.png', 
+                    text: 'Sign in with Google', 
+                    onTap: () => signInWithGoogle()
                   ),
                 ],
               ),

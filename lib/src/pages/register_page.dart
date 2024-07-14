@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../components/social_login.dart';
 import '../providers/auth_provider.dart';
 import '../components/alert_dialog.dart';
 import '../components/text_field.dart';
@@ -153,7 +154,7 @@ class _RegisterPageState extends State<RegisterPage> {
               FormTextField(
                 controller: confirmPasswordController,
                 label: 'Confirm Password',
-                hintText: 'Reenter password',
+                hintText: 'Re-enter password',
                 obscureText: true,
                 keyboardType: TextInputType.text,
               ),
@@ -174,7 +175,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                     ),
                     const SizedBox(width: 10),
-                    Text('Or continue with', style: TextStyle(color: Theme.of(context).colorScheme.primary),),
+                    Text('OR', style: TextStyle(color: Theme.of(context).colorScheme.primary),),
                     const SizedBox(width: 10),
                     Expanded(
                       child: Divider(
@@ -185,30 +186,13 @@ class _RegisterPageState extends State<RegisterPage> {
                   ],
                 ),
               ),
-              Row(
+              Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  GestureDetector(
-                    onTap: () => signInWithGoogle(),
-                    child: Container(
-                      padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), color: Theme.of(context).colorScheme.surface),
-                      child: Image.asset(
-                        'assets/images/google-logo.png',
-                        width: 30,
-                        height: 30,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 30),
-                  Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), color: Theme.of(context).colorScheme.surface),
-                    child: Image.asset(
-                      'assets/images/facebook-logo.png',
-                      width: 35,
-                      height: 35,
-                    ),
+                  SocialLoginButton(
+                    assetPath: 'assets/images/google-logo.png', 
+                    text: 'Sign up with Google', 
+                    onTap: () => signInWithGoogle()
                   ),
                 ],
               ),
