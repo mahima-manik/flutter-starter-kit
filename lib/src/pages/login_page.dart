@@ -175,7 +175,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     const SizedBox(width: 10),
-                    Text('OR', style: TextStyle(color: Theme.of(context).colorScheme.primary),),
+                    Text('OR', style: TextStyle(color: Theme.of(context).colorScheme.secondary),),
                     const SizedBox(width: 10),
                     Expanded(
                       child: Divider(
