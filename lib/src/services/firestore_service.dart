@@ -11,6 +11,10 @@ class FirestoreService {
       List<Product> products = [];
       for (var doc in querySnapshot.docs) {
         List<String> imageUrls = await StorageService().getProductImages(doc.id);
+        if (imageUrls.isEmpty) {
+          imageUrls.add(await StorageService().getDefaultProductImage());
+        }
+        
         double? price = _parseDouble(doc['price']);
         double? rating = _parseDouble(doc['rating']) ?? 0.0;
 

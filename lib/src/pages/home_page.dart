@@ -27,11 +27,6 @@ class _HomePageState extends State<HomePage> {
             context.read<ThemeProvider>().toggleTheme();
           }),
           CartIconButton(onCartUpdated: () {}),
-          // IconButton(icon: const Icon(Icons.view_list), onPressed: () {
-          //   setState(() {
-          //     _isListView = !_isListView;
-          //   });
-          // }),
         ],
       ),
       drawer: const CustomDrawer(),

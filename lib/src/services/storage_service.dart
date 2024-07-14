@@ -51,7 +51,6 @@ class StorageService {
 
   Future<List<String>> getProductImages(String productId) async {
     final productImagesRef = _storage.ref().child('products/$productId/');
-
     try {
       final ListResult result = await productImagesRef.listAll();
       List<String> imageUrls = [];
@@ -63,5 +62,11 @@ class StorageService {
     } catch (e) {
       return [];
     }
+  }
+
+  Future<String> getDefaultProductImage() async {
+     final productImageRef = _storage.ref().child('products/sample-product-image.jpg');
+     final defaultImageUrl = await productImageRef.getDownloadURL();
+     return defaultImageUrl;
   }
 }
