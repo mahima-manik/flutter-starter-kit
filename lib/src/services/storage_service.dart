@@ -65,7 +65,7 @@ class StorageService {
   }
 
   Future<String> getDefaultProductImage() async {
-     final productImageRef = _storage.ref().child('products/sample-product-image.jpg');
+     final productImageRef = _storage.ref().child('products/default-product-image.jpg');
      final defaultImageUrl = await productImageRef.getDownloadURL();
      return defaultImageUrl;
   }
