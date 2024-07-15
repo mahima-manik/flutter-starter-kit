@@ -11,7 +11,7 @@ class QuantitySelector extends StatefulWidget {
   });
 
   @override
-  _QuantitySelectorState createState() => _QuantitySelectorState();
+  State<QuantitySelector> createState() => _QuantitySelectorState();
 }
 
 class _QuantitySelectorState extends State<QuantitySelector> {

@@ -50,7 +50,7 @@ class CustomDrawer extends StatelessWidget {
             title: const Text('Edit Profile'),
             onTap: () {
                 Navigator.pop(context);
-                Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfilePage()));
             },
           ),
           const Spacer(),

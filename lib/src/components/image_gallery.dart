@@ -6,7 +6,7 @@ class ImageGallery extends StatefulWidget {
   const ImageGallery({super.key, required this.imageUrls});
 
   @override
-  _ImageGalleryState createState() => _ImageGalleryState();
+  State<ImageGallery> createState() => _ImageGalleryState();
 }
 
 class _ImageGalleryState extends State<ImageGallery> {

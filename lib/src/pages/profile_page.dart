@@ -8,8 +8,10 @@ import '../providers/auth_provider.dart';
 import '../components/text_field.dart';
 
 class ProfilePage extends StatefulWidget {
+  const ProfilePage({super.key});
+
   @override
-  _ProfilePageState createState() => _ProfilePageState();
+  State<ProfilePage> createState() => _ProfilePageState();
 }
 
 class _ProfilePageState extends State<ProfilePage> {
@@ -54,11 +56,10 @@ class _ProfilePageState extends State<ProfilePage> {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to update password: $e')));
     }
   }
-
   void updateDisplayName() async {
     String displayName = _displayNameController.text;
     if (displayName.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Name is required')));
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Name is required')));
       return;
     }
     showDialog(
@@ -75,10 +76,10 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   void updateDisplayPhoto() async {
-    final ImagePicker _picker = ImagePicker();
+    final ImagePicker picker = ImagePicker();
     try {
       // Open the image picker
-      final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+      final XFile? image = await picker.pickImage(source: ImageSource.gallery);
 
       if (image != null) {
         showDialog(

@@ -5,7 +5,7 @@ ThemeData lightMode = ThemeData(
   scaffoldBackgroundColor: Colors.grey.shade200, // Light grey background
   primarySwatch: Colors.grey,
   primaryColor: Colors.grey.shade600, // Darker grey for primary elements
-  highlightColor: Color(0xFFD471D4), // Pink highlight color
+  highlightColor: const Color(0xFFD471D4), // Pink highlight color
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ButtonStyle(
       backgroundColor:
@@ -30,7 +30,7 @@ ThemeData lightMode = ThemeData(
   colorScheme: ColorScheme.light(
     surface: Colors.grey.shade300, // Light grey for surfaces
     primary: Colors.grey.shade600, // Darker grey for primary
-    secondary: Color(0xFF71B9D4), // Blue for secondary
+    secondary: const Color(0xFF71B9D4), // Blue for secondary
     onSurface: Colors.black,
     onPrimary: Colors.white, // White on primary for better readability
     onSecondary: Colors.black,
@@ -43,7 +43,7 @@ ThemeData darkMode = ThemeData(
   scaffoldBackgroundColor: Colors.grey.shade900, // Dark grey background
   primarySwatch: Colors.grey,
   primaryColor: Colors.grey.shade800, // Darker grey for primary elements
-  highlightColor: Color(0xFFD471D4), // Pink highlight color
+  highlightColor: const Color(0xFFD471D4), // Pink highlight color
   appBarTheme: AppBarTheme(
     backgroundColor: Colors.grey.shade800, // Dark grey for the app bar
   ),
@@ -67,7 +67,7 @@ ThemeData darkMode = ThemeData(
   colorScheme: ColorScheme.dark(
     surface: Colors.grey.shade800, // Dark grey for surfaces
     primary: Colors.grey.shade800, // Darker grey for primary
-    secondary: Color(0xFF34C6D6), // Blue for secondary
+    secondary: const Color(0xFF34C6D6), // Blue for secondary
     onSurface: Colors.white,
     onPrimary: Colors.white, // White on primary for better readability
     onSecondary: Colors.black,
