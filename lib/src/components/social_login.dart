@@ -19,7 +19,7 @@ class SocialLoginButton extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(25),
+          borderRadius: BorderRadius.circular(10),
           color: Theme.of(context).colorScheme.surface,
         ),
         child: SizedBox(

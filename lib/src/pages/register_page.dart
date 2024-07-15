@@ -120,16 +120,17 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
+      body: Center(
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
-                'assets/images/sample_logo.png',
-                width: 200,
-                height: 200,
+                'assets/images/fsk_logo.png',
+                width: 80,
+                height: 80,
               ),
+              const SizedBox(height: 20),
               const Text(
                 'let\'s get started!',
                 style: TextStyle(fontSize: 30),

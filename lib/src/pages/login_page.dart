@@ -112,19 +112,20 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
+      body: Center(
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const SizedBox(height: 30),
               Image.asset(
-                'assets/images/sample_logo.png',
-                width: 200,
-                height: 200,
+                'assets/images/fsk_logo.png',
+                width: 80,
+                height: 80,
               ),
+              const SizedBox(height: 20),
               const Text(
-                'hey there!',
+                'Flutter Starter Kit',
                 style: TextStyle(fontSize: 30),
               ),
               const SizedBox(height: 20),
