@@ -2,22 +2,19 @@ import 'package:flutter/material.dart';
 
 ThemeData lightMode = ThemeData(
   brightness: Brightness.light,
-  scaffoldBackgroundColor:
-      Colors.blueGrey.shade50, // Very light blue-grey for background
-  primarySwatch: Colors.blueGrey,
-  primaryColor:
-      Colors.blueGrey.shade600, // Darker blue-grey for primary elements
-  highlightColor: Colors.blueGrey.shade200, // Light blue-grey for highlights
+  scaffoldBackgroundColor: Colors.grey.shade200, // Light grey background
+  primarySwatch: Colors.grey,
+  primaryColor: Colors.grey.shade600, // Darker grey for primary elements
+  highlightColor: Color(0xFFD471D4), // Pink highlight color
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ButtonStyle(
       backgroundColor:
-          WidgetStateProperty.resolveWith((_) => Colors.blueGrey.shade200),
+          WidgetStateProperty.resolveWith((_) => Colors.grey.shade300),
       foregroundColor: WidgetStateProperty.resolveWith((_) => Colors.black),
     ),
   ),
   appBarTheme: AppBarTheme(
-    backgroundColor:
-        Colors.blueGrey.shade100, // Light blue-grey for the app bar
+    backgroundColor: Colors.grey.shade300, // Light grey for the app bar
   ),
   textTheme: const TextTheme(
     bodyLarge: TextStyle(color: Colors.black),
@@ -31,9 +28,9 @@ ThemeData lightMode = ThemeData(
     headlineSmall: TextStyle(color: Colors.black),
   ),
   colorScheme: ColorScheme.light(
-    surface: Colors.blueGrey.shade100, // Light blue-grey for surfaces
-    primary: Colors.blueGrey.shade600, // Darker blue-grey for primary
-    secondary: Colors.teal.shade400, // Teal for secondary to add a pop of color
+    surface: Colors.grey.shade300, // Light grey for surfaces
+    primary: Colors.grey.shade600, // Darker grey for primary
+    secondary: Color(0xFF71B9D4), // Blue for secondary
     onSurface: Colors.black,
     onPrimary: Colors.white, // White on primary for better readability
     onSecondary: Colors.black,
@@ -43,20 +40,17 @@ ThemeData lightMode = ThemeData(
 
 ThemeData darkMode = ThemeData(
   brightness: Brightness.dark,
-  scaffoldBackgroundColor:
-      Colors.black, // Pure black for the background to enhance contrast
-  primarySwatch: Colors.blueGrey,
-  primaryColor: Colors.blueGrey.shade800, // Dark blue-grey for primary elements
-  highlightColor:
-      Colors.blueGrey.shade700, // Slightly lighter blue-grey for highlights
+  scaffoldBackgroundColor: Colors.grey.shade900, // Dark grey background
+  primarySwatch: Colors.grey,
+  primaryColor: Colors.grey.shade800, // Darker grey for primary elements
+  highlightColor: Color(0xFFD471D4), // Pink highlight color
   appBarTheme: AppBarTheme(
-    backgroundColor:
-        Colors.blueGrey.shade900, // Darker blue-grey for the app bar
+    backgroundColor: Colors.grey.shade800, // Dark grey for the app bar
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ButtonStyle(
       backgroundColor:
-          WidgetStateProperty.resolveWith((_) => Colors.blueGrey.shade800),
+          WidgetStateProperty.resolveWith((_) => Colors.grey.shade800),
       foregroundColor: WidgetStateProperty.resolveWith((_) => Colors.white),
     ),
   ),
@@ -64,20 +58,18 @@ ThemeData darkMode = ThemeData(
     bodyLarge: TextStyle(color: Colors.white),
     bodyMedium: TextStyle(
         color: Colors.white70), // Slightly muted white for medium text
-    bodySmall: TextStyle(
-        color: Colors.white60), // Even more muted white for small text
+    bodySmall:
+        TextStyle(color: Colors.white60), // More muted white for small text
     headlineLarge: TextStyle(color: Colors.white),
     headlineMedium: TextStyle(color: Colors.white),
     headlineSmall: TextStyle(color: Colors.white),
   ),
   colorScheme: ColorScheme.dark(
-    surface:
-        Colors.blueGrey.shade800, // Dark surface to match the primary color
-    primary: Colors.blueGrey.shade800, // Dark primary for a cohesive look
-    secondary: Colors.teal.shade600, // Teal for secondary to add a pop of color
+    surface: Colors.grey.shade800, // Dark grey for surfaces
+    primary: Colors.grey.shade800, // Darker grey for primary
+    secondary: Color(0xFF34C6D6), // Blue for secondary
     onSurface: Colors.white,
     onPrimary: Colors.white, // White on primary for better readability
-    onSecondary: Colors.black, // Black on secondary to ensure readability
+    onSecondary: Colors.black,
   ),
 );
-
