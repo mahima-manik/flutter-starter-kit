@@ -191,7 +191,6 @@ class _ProfilePageState extends State<ProfilePage> {
             Consumer<UserAuthProvider>(
               builder: (context, value, child) => FormTextField(
                 controller: _displayNameController,
-                label: 'Name',
                 hintText: 'Enter your full name',
                 obscureText: false,
                 keyboardType: TextInputType.name,
@@ -202,7 +201,7 @@ class _ProfilePageState extends State<ProfilePage> {
             FormTextField(
               controller: _currentPasswordController,
               label: 'Current Password',
-              hintText: 'Enter your current password',
+              // hintText: 'Enter your current password',
               obscureText: true,
               keyboardType: TextInputType.text,
             ),
@@ -211,29 +210,50 @@ class _ProfilePageState extends State<ProfilePage> {
             FormTextField(
               controller: _newPasswordController,
               label: 'New Password',
-              hintText: 'Enter your new password',
+              // hintText: 'Enter your new password',
               obscureText: true,
               keyboardType: TextInputType.text,
             ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: updateProfileFields,
-              child: const Text('Update'),
+            Padding(
+              padding: const EdgeInsets.all(25),
+              child: SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: updateProfileFields,
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    backgroundColor: Theme.of(context).colorScheme.secondary,
+                    elevation: 0,
+                    padding: const EdgeInsets.symmetric(vertical: 15),
+                  ),
+                  child: Text(
+                    'Update',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
+                  ),
+                ),
+              ),
             ),
-            const SizedBox(height: 30),
             Padding(
               padding: const EdgeInsets.all(25.0),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text('Joined on: ${DateFormat('dd MMMM yyyy').format(user?.metadata.creationTime?.toLocal() ?? DateTime.now())}'),
-                  GestureDetector(
-                    onTap: deleteUser,
-                    child: const Text(
-                      'Delete', 
-                      style: TextStyle(color: Colors.red),
-                    ),
+                  Text(
+                    'Joined on: ${DateFormat('dd MMMM yyyy').format(user?.metadata.creationTime?.toLocal() ?? DateTime.now())}',
+                    style: Theme.of(context).textTheme.bodyMedium,
                   ),
+                  const SizedBox(width: 10),
+                  const Text(
+                    'Delete Account?',
+                    style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
+                  ),
+                  
                 ],
               ),
             ),
