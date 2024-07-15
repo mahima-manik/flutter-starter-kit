@@ -181,7 +181,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -192,7 +192,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     const SizedBox(width: 10),
-                    Text('OR', style: TextStyle(color: Theme.of(context).colorScheme.secondary)),
+                    Text('or', style: TextStyle(color: Theme.of(context).colorScheme.secondary)),
                     const SizedBox(width: 10),
                     Expanded(
                       child: Divider(
@@ -212,14 +212,13 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ],
               ),
-              const SizedBox(height: 20),
               Row (
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text('Not a user? '),
                   GestureDetector(
                     onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterPage())),
-                    child: const Text('Sign up', style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),),
+                    child: Text('Sign up', style: TextStyle(color: Theme.of(context).colorScheme.secondary, fontWeight: FontWeight.bold),),
                   ),
                 ],
               ),

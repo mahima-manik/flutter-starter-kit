@@ -159,13 +159,32 @@ class _RegisterPageState extends State<RegisterPage> {
                 obscureText: true,
                 keyboardType: TextInputType.text,
               ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () => registerUser(),
-                child: const Text('Register'),
+              Padding(
+                padding: const EdgeInsets.all(25),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () => registerUser(),
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      backgroundColor: Theme.of(context).colorScheme.secondary,
+                      elevation: 0,
+                      padding: const EdgeInsets.symmetric(vertical: 15),
+                    ),
+                    child: Text(
+                      'Register',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
+                    ),
+                  ),
+                ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -176,7 +195,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                     ),
                     const SizedBox(width: 10),
-                    Text('OR', style: TextStyle(color: Theme.of(context).colorScheme.primary),),
+                    Text('or', style: TextStyle(color: Theme.of(context).colorScheme.secondary)),
                     const SizedBox(width: 10),
                     Expanded(
                       child: Divider(
@@ -204,7 +223,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   const Text('Already a user? '),
                   GestureDetector(
                     onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginPage())),
-                    child: const Text('Login now', style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),),
+                    child: Text('Login now', style: TextStyle(color: Theme.of(context).colorScheme.secondary, fontWeight: FontWeight.bold)),
                   ),
                 ],
               ),
