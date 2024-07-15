@@ -33,7 +33,7 @@ class _LoginPageState extends State<LoginPage> {
       showDialog(
         context: context,
         builder: (context) => const CustomAlertDialog(
-          title: 'Error',
+          title: 'Something went wrong',
           message: 'Please enter your email and password.',
         ),
       );
@@ -159,10 +159,26 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ],
               ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () => signInWithUsernameAndPassword(),
-                child: const Text('Login'),
+              Padding(
+                padding: const EdgeInsets.all(25),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () => signInWithUsernameAndPassword(),
+                    style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        backgroundColor: Theme.of(context).colorScheme.secondary,
+                        elevation: 0,
+                        padding: const EdgeInsets.symmetric(vertical: 15),
+                      ),
+                    child: Text('Login', style: TextStyle(
+                      fontWeight: FontWeight.bold, 
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),),
+                  ),
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
@@ -176,7 +192,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     const SizedBox(width: 10),
-                    Text('OR', style: TextStyle(color: Theme.of(context).colorScheme.secondary),),
+                    Text('OR', style: TextStyle(color: Theme.of(context).colorScheme.secondary)),
                     const SizedBox(width: 10),
                     Expanded(
                       child: Divider(

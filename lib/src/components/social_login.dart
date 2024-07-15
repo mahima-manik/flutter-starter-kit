@@ -23,7 +23,7 @@ class SocialLoginButton extends StatelessWidget {
           color: Theme.of(context).colorScheme.surface,
         ),
         child: SizedBox(
-          width: 220,
+          width: MediaQuery.of(context).size.width * 0.5,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

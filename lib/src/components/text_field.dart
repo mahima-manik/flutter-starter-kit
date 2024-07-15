@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 
 class FormTextField extends StatelessWidget {
   final TextEditingController controller;
-  final String label;
-  final String hintText;
+  final String? label;
+  final String? hintText;
   final bool obscureText;
   final TextInputType keyboardType;
   const FormTextField({
     super.key,
     required this.controller,
-    required this.label,
-    required this.hintText,
+    this.label = '',
+    this.hintText = '',
     required this.obscureText,
     required this.keyboardType
   });
@@ -24,12 +24,13 @@ class FormTextField extends StatelessWidget {
         controller: controller,
         keyboardType: keyboardType,
         obscureText: obscureText,
+        cursorColor: theme.colorScheme.onSurface,
         decoration: InputDecoration(
           labelText: label,
           hintText: hintText,
           enabledBorder: OutlineInputBorder(
             borderRadius: const BorderRadius.all(Radius.circular(10)),
-            borderSide: BorderSide(color: theme.colorScheme.secondary),
+            borderSide: BorderSide(color: theme.colorScheme.surface),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: const BorderRadius.all(Radius.circular(10)),
