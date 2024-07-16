@@ -64,31 +64,32 @@ class CartPageState extends State<CartPage> {
                         },
                       ),
               ),
-              Container(
-                padding: const EdgeInsets.all(25.0),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.surface,
-                  borderRadius: BorderRadius.circular(20),
+              if (cartProvider.totalProducts > 0)
+                Container(
+                  padding: const EdgeInsets.all(25.0),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.surface,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Total: \$${cartProvider.totalAmount.toStringAsFixed(2)}',
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.pushReplacement(
+                            context, 
+                            MaterialPageRoute(builder: (context) => const PaymentPage())
+                          );
+                        },
+                        child: const Text('Pay Now'),
+                      ),
+                    ],
+                  ),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Total: \$${cartProvider.totalAmount.toStringAsFixed(2)}',
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    ElevatedButton(
-                      onPressed: cartProvider.totalProducts > 0 ? () {
-                        Navigator.pushReplacement(
-                          context, 
-                          MaterialPageRoute(builder: (context) => const PaymentPage())
-                        );
-                      } : null,
-                      child: const Text('Pay Now'),
-                    ),
-                  ],
-                ),
-              ),
             ],
           );
         },
