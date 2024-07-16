@@ -66,10 +66,18 @@ class ProductTile extends StatelessWidget {
                       int productCount = cartProvider.getProductCount(product.id);
                       return productCount == 0
                       ? ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                        ),
                         onPressed: () {
                           cartProvider.addToCart(product, 1);
                         },
-                        child: const Text('Add'),
+                        child: const Text(
+                          'Add',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
                       )
                       : Row(
                           children: [
