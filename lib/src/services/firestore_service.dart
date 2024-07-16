@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/product.dart';
 import 'storage_service.dart';
@@ -5,16 +7,18 @@ import 'storage_service.dart';
 class FirestoreService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Stream<List<Product>> fetchAllProducts() async* {
-    try {
-      QuerySnapshot querySnapshot = await _firestore.collection('products').get();
-      List<Product> products = [];
+  Stream<List<Product>> fetchAllProducts() {
+    final StreamController<List<Product>> controller = StreamController();
+    List<Product> products = [];
+
+    _firestore.collection('products').snapshots().listen((querySnapshot) async {
       for (var doc in querySnapshot.docs) {
-        List<String> imageUrls = await StorageService().getProductImages(doc.id);
+        List<String> imageUrls =
+            await StorageService().getProductImages(doc.id);
         if (imageUrls.isEmpty) {
           imageUrls.add(await StorageService().getDefaultProductImage());
         }
-        
+
         double? price = _parseDouble(doc['price']);
         double? rating = _parseDouble(doc['rating']) ?? 0.0;
 
@@ -31,11 +35,14 @@ class FirestoreService {
           images: imageUrls,
         );
         products.add(product);
+        controller.add(List.from(
+            products)); // Add a copy of the current list to the stream
       }
-      yield products;
-    } catch (e) {
-      throw Exception('Failed to fetch products: $e');
-    }
+    }, onError: (e) {
+      controller.addError('Failed to fetch products: $e');
+    });
+
+    return controller.stream;
   }
 
   double? _parseDouble(dynamic value) {

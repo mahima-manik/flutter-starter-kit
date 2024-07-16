@@ -24,9 +24,11 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         actions: <Widget>[
-          IconButton(icon: const Icon(Icons.brightness_4), onPressed: () {
-            context.read<ThemeProvider>().toggleTheme();
-          }),
+          IconButton(
+              icon: const Icon(Icons.brightness_4),
+              onPressed: () {
+                context.read<ThemeProvider>().toggleTheme();
+              }),
           CartIconButton(onCartUpdated: () {}),
         ],
       ),
@@ -34,7 +36,8 @@ class _HomePageState extends State<HomePage> {
       body: StreamBuilder<List<Product>>(
         stream: FirestoreService().fetchAllProducts(),
         builder: (context, snapshot) {
-          if (!snapshot.hasData || snapshot.connectionState == ConnectionState.waiting) {
+          if (snapshot.connectionState == ConnectionState.waiting &&
+              !snapshot.hasData) {
             return const Center(child: CircularProgressIndicator());
           }
           if (snapshot.hasError) {
@@ -42,7 +45,9 @@ class _HomePageState extends State<HomePage> {
           }
           final products = snapshot.data ?? [];
           return Center(
-            child: _isListView ? _buildListView(products) : _buildGridView(products),
+            child: _isListView
+                ? _buildListView(products)
+                : _buildGridView(products),
           );
         },
       ),
