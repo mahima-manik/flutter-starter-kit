@@ -17,5 +17,7 @@ jobs:
         channel: stable
     - name: Install dependencies
       run: flutter pub get
+    - name: Create dummy .env file
+      run: echo "DUMMY_ENV=1" > assets/.env
     - name: Analyze code
       run: flutter analyze .
